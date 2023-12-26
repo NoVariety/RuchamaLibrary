@@ -1,2 +1,2 @@
-# RuchamaLibrary
-library web app in react, typescript and sql
+# Ruchama's Library
+Ruchama best librarian frfr

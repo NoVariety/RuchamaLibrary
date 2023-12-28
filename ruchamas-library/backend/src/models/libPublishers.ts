@@ -6,7 +6,7 @@ export default class LibPublishers {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column("integer")
+  @Column("varchar")
   name: string
 
   @Column("date")

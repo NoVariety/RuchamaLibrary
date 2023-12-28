@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryColumn } from "typeorm"
 
 @Entity()
 export default class LibReaders {
-  @PrimaryColumn()
+  @PrimaryColumn("integer")
   id: number
 
   @Column("varchar")
@@ -14,7 +14,7 @@ export default class LibReaders {
   @Column("varchar")
   email: string
 
-  @Column("integer")
+  @Column("bigint")
   phoneNumber: number
 
   @Column("date")

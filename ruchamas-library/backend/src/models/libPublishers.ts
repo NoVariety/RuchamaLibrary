@@ -6,13 +6,13 @@ export default class LibPublishers {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column()
+  @Column("integer")
   name: string
 
-  @Column()
+  @Column("date")
   foundingDate: Date
 
-  @Column()
+  @Column("varchar")
   originCountry: String
 
   @OneToMany((type) => LibBooks, (book) => book.author)

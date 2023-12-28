@@ -2,21 +2,21 @@ import { Entity, Column, PrimaryColumn } from "typeorm"
 
 @Entity()
 export default class LibReaders {
-  @PrimaryColumn({ length: 9 })
+  @PrimaryColumn()
   id: number
 
-  @Column()
+  @Column("varchar")
   firstName: string
 
-  @Column()
+  @Column("varchar")
   lastName: string
 
-  @Column()
+  @Column("varchar")
   email: string
 
-  @Column({ length: 10 })
+  @Column("integer")
   phoneNumber: number
 
-  @Column()
-  joinDate: Date
+  @Column("date")
+  joinDate: Date = new Date()
 }

@@ -22,9 +22,9 @@ export default class LibBorrows {
   @JoinColumn()
   reader: LibReaders
 
-  @Column()
-  borrowDate: Date
+  @Column("date")
+  borrowDate: Date = new Date()
 
-  @Column()
+  @Column("date")
   returnDate: Date
 }

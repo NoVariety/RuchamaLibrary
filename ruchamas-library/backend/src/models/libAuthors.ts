@@ -10,6 +10,6 @@ export default class LibAuthors {
   @OneToMany((type) => LibBooks, (book) => book.author)
   books: LibBooks[]
 
-  @Column()
+  @Column("varchar")
   penName: string
 }

@@ -25,5 +25,5 @@
   },
   "include": [
     "src"
-, "backend"  ]
+, "backend", "../backend/src/dataSource.ts"  ]
 }

@@ -3,15 +3,17 @@ import { Entity, Column, PrimaryColumn, ManyToOne } from "typeorm"
 import LibAuthors from "./libAuthors"
 import LibPublishers from "./libPublishers"
 
+//! add type to all cols
+
 @Entity()
 export default class LibBooks {
-  @PrimaryColumn({ length: 13 })
+  @PrimaryColumn("integer")
   id: number
 
-  @Column()
+  @Column("varchar")
   title: string
 
-  @Column()
+  @Column("varchar")
   coverImage: string
 
   @ManyToOne((type) => LibAuthors, (author) => author.books)
@@ -20,18 +22,27 @@ export default class LibBooks {
   @ManyToOne((type) => LibPublishers, (publisher) => publisher.books)
   publisher: LibPublishers
 
-  @Column()
+  @Column("date")
+  publishDate: Date
+
+  @Column("varchar")
+  language: string
+
+  @Column("varchar")
   genre: string
 
-  @Column({ length: 9 })
+  @Column("text")
+  summary: string
+
+  @Column("varchar", { length: 9 })
   coverType: string
 
-  @Column()
+  @Column("integer")
   pageCount: number
 
-  @Column("double")
+  @Column("decimal", { precision: 5, scale: 2 })
   price: number
 
-  @Column()
+  @Column("integer")
   copies: number
 }

@@ -1,10 +1,11 @@
-import "reflect-metadata"
 import { DataSource } from "typeorm"
-import LibAuthors from "../backend/models/libAuthors"
-import LibBooks from "../backend/models/libBooks"
-import LibBorrows from "../backend/models/libBorrows"
-import LibPublishers from "../backend/models/libPublishers"
-import LibReaders from "../backend/models/libReaders"
+import "reflect-metadata"
+
+import LibAuthors from "./models/libAuthors"
+import LibBooks from "./models/libBooks"
+import LibBorrows from "./models/libBorrows"
+import LibPublishers from "./models/libPublishers"
+import LibReaders from "./models/libReaders"
 
 export const AppDataSource = new DataSource({
   type: "postgres",

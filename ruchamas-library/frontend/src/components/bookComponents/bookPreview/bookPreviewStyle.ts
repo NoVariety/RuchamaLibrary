@@ -47,6 +47,22 @@ const infoValueSx: SxProps = {
   textAlign: "left",
 }
 
+const summaryIconSx: SxProps = {
+  backgroundImage:
+    "url(https://cdn-icons-png.flaticon.com/128/1102/1102028.png?ga=GA1.1.448369478.1702563865&semt=ais)",
+  width: "1.25rem",
+  height: "1.25rem",
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "contain",
+  margin: "0",
+  marginTop: "0.15rem",
+  cursor: "pointer",
+
+  "&:hover": {
+    transform: "scale(1.5)",
+  },
+}
+
 const titleSx: SxProps = {
   width: "100%",
   fontSize: "1.2rem",
@@ -69,6 +85,7 @@ export {
   infoStackSx,
   infoNameSx,
   infoValueSx,
+  summaryIconSx,
   titleSx,
   getCoverImageSx,
 }

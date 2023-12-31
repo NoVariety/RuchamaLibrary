@@ -4,6 +4,7 @@ enum coverTypes {
 }
 
 interface bookInformation {
+  summary: string
   title: string
   coverImage: string
   author: string
@@ -17,6 +18,7 @@ interface bookInformation {
 }
 
 const defaultBookInfo: bookInformation = {
+  summary: "?",
   title: "?",
   coverImage:
     "https://cdn.bookauthority.org/dist/images/book-cover-not-available.6b5a104fa66be4eec4fd16aebd34fe04.png",

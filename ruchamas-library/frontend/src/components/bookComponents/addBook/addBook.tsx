@@ -13,17 +13,17 @@ export default function AddBook() {
   const [bookData, setBookData] = useState<bookInformation>(defaultBookInfo)
 
   //? tunnel to summer
-  // const [isbn, setIsbn] = useState<number>(9781638584155)
+  const [isbn, setIsbn] = useState<number>(9781638584155)
   //? dune
-  const [isbn, setIsbn] = useState<number>(9780340960196)
+  // const [isbn, setIsbn] = useState<number>(9780340960196)
 
   //! add try catch in case fetching book failed and make a proper alert for it
   //* cool idea to maybe implement later: make the fields editable so you can change whatever you like in the final result
   useEffect(() => {
     fetchBooksApi(isbn).then((response) => {
       const data = response.data.items[0].volumeInfo
-      console.log(response.data.items[0].volumeInfo)
       const information: bookInformation = {
+        summary: data.description,
         title: data.title,
         coverImage: data.imageLinks.thumbnail,
         author: data.authors[0],
@@ -33,7 +33,7 @@ export default function AddBook() {
         genre: data.categories[0],
         format: "?", //! change to paperback/hardcover according to choice
         pages: data.pageCount, //! add option to set a different page count if is incorrect
-        ISBN: isbn,
+        ISBN: isbn, //! check if not already in db, suggest adding more to count if yes
       }
       setBookData(information)
     })

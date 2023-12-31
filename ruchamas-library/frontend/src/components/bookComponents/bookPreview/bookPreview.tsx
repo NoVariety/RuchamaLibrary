@@ -1,4 +1,4 @@
-import { Container, Stack, Typography } from "@mui/material"
+import { Container, Stack, Tooltip, Typography } from "@mui/material"
 import {
   getCoverImageSx,
   infoNameSx,
@@ -6,6 +6,7 @@ import {
   infoValueSx,
   marginContainerSx,
   previewContainerSx,
+  summaryIconSx,
   titleSx,
 } from "./bookPreviewStyle"
 
@@ -48,7 +49,7 @@ export default function BookPreview({ bookInfo }: Props) {
     },
     {
       infoName: "Pages",
-      infoValue: bookInfo.pages,
+      infoValue: bookInfo.pages !== 0 ? bookInfo.pages : "?",
     },
     {
       infoName: "ISBN",
@@ -63,6 +64,12 @@ export default function BookPreview({ bookInfo }: Props) {
           <Typography sx={titleSx}>{bookInfo.title}</Typography>
 
           <Container sx={getCoverImageSx(bookInfo.coverImage)}></Container>
+          <Stack direction="row" sx={infoStackSx}>
+            <Typography sx={infoNameSx}>Summary</Typography>
+            <Tooltip title={bookInfo.summary} arrow>
+              <Container sx={summaryIconSx} disableGutters></Container>
+            </Tooltip>
+          </Stack>
           {bookInfoMap.map((item) => {
             return (
               <Stack direction="row" sx={infoStackSx}>

@@ -3,6 +3,11 @@ import { AppDataSource } from "../dataSource"
 
 const bookRepository = AppDataSource.getRepository(LibBooks)
 
-const fetchAllBooks = async () => await bookRepository.find()
+const fetchAllBooks = async () =>
+  await bookRepository.find({
+    relations: {
+      publisher: true,
+    },
+  })
 
 export { fetchAllBooks }

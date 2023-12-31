@@ -1,7 +1,6 @@
 import { DataSource } from "typeorm"
 import "reflect-metadata"
 
-import LibAuthors from "./models/libAuthors"
 import LibBooks from "./models/libBooks"
 import LibBorrows from "./models/libBorrows"
 import LibPublishers from "./models/libPublishers"
@@ -16,7 +15,7 @@ export const AppDataSource = new DataSource({
   database: "ruchama",
   synchronize: true,
   logging: false,
-  entities: [LibAuthors, LibBooks, LibBorrows, LibPublishers, LibReaders],
+  entities: [LibBooks, LibBorrows, LibPublishers, LibReaders],
   migrations: [],
   subscribers: [],
 })

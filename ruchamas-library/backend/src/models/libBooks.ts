@@ -1,6 +1,5 @@
 import { Entity, Column, PrimaryColumn, ManyToOne } from "typeorm"
 
-import LibAuthors from "./libAuthors"
 import LibPublishers from "./libPublishers"
 
 import { noCoverAvailable, coverTypes } from "../data.consts"
@@ -13,12 +12,11 @@ export default class LibBooks {
   @Column("varchar")
   title: string
 
-  //! add default image
   @Column("varchar")
   coverImage: string = noCoverAvailable
 
-  @ManyToOne((type) => LibAuthors, (author) => author.books)
-  author: LibAuthors
+  @Column("varchar")
+  author: string
 
   @ManyToOne((type) => LibPublishers, (publisher) => publisher.books)
   publisher: LibPublishers
@@ -30,7 +28,7 @@ export default class LibBooks {
   language: string
 
   @Column("varchar")
-  genre: string
+  category: string
 
   @Column("text")
   summary: string

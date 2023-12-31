@@ -13,9 +13,9 @@ export default function AddBook() {
   const [bookData, setBookData] = useState<bookInformation>(defaultBookInfo)
 
   //? tunnel to summer
-  const [isbn, setIsbn] = useState<number>(9781638584155)
+  // const [isbn, setIsbn] = useState<number>(9781638584155)
   //? dune
-  // const [isbn, setIsbn] = useState<number>(9780340960196)
+  const [isbn, setIsbn] = useState<number>(9780340960196)
 
   //! add try catch in case fetching book failed and make a proper alert for it
   //* cool idea to maybe implement later: make the fields editable so you can change whatever you like in the final result

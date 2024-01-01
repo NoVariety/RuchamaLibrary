@@ -1,7 +1,6 @@
 import { SxProps } from "@mui/material"
 
 const previewContainerSx: SxProps = {
-  backgroundColor: "red",
   height: "auto",
   width: "22em",
   //   transform: "scale(0.75)",

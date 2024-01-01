@@ -1,13 +1,20 @@
-import { Container } from "@mui/material"
+import { Container, Stack } from "@mui/material"
 
 import { addBookContainerSx } from "./addBookStyle"
 
-import { bookInformation, defaultBookInfo } from "../../../data.consts"
+import {
+  FormInput,
+  bookInformation,
+  coverTypes,
+  defaultBookInfo,
+} from "../../../data.consts"
 
 import BookPreview from "../bookPreview/bookPreview"
 
 import { fetchBooksApi } from "../../../APIs/googleBooks"
 import { useEffect, useState } from "react"
+
+import AddBookForm from "../addBookForm/addBookForm"
 
 export default function AddBook() {
   const [bookData, setBookData] = useState<bookInformation>(defaultBookInfo)
@@ -40,9 +47,33 @@ export default function AddBook() {
     console.log(bookData)
   }, [])
 
+  const [formValues, setFormValues] = useState<FormInput>({
+    ISBN: 0,
+    publisher: "",
+    pageCount: 0,
+    printFormat: coverTypes.PAPERBACK,
+  })
+
+  const onSubmit = (data: FormInput) => {
+    console.log(data)
+    setFormValues(data)
+  }
+
+  useEffect(() => {
+    setBookData((prev) => ({
+      ...prev,
+      publisher: formValues.publisher,
+      pages: formValues.pageCount,
+      format: formValues.printFormat,
+    }))
+  }, [formValues])
+
   return (
     <Container sx={addBookContainerSx}>
-      <BookPreview bookInfo={bookData} />
+      <Stack direction="row">
+        <AddBookForm defaultValues={formValues} onSubmit={onSubmit} />
+        <BookPreview bookInfo={bookData} />
+      </Stack>
     </Container>
   )
 }

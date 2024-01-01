@@ -32,4 +32,24 @@ const defaultBookInfo: bookInformation = {
   ISBN: "?",
 }
 
-export { type bookInformation, defaultBookInfo }
+interface FormInputProps {
+  name: string
+  control: any
+  label: string
+  setValue?: any
+}
+
+interface FormInput {
+  ISBN: number
+  publisher: string //! set to publisher object
+  pageCount: number
+  printFormat: coverTypes
+}
+
+export {
+  coverTypes,
+  type bookInformation,
+  type FormInputProps,
+  type FormInput,
+  defaultBookInfo,
+}

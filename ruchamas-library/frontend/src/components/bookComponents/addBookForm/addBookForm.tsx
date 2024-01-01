@@ -24,7 +24,12 @@ export default function AddBookForm({ defaultValues, onSubmit }: Props) {
 
       <FormInputText name="ISBN" control={control} label="ISBN" />
       <FormInputDropdown name="publisher" control={control} label="Publisher" />
-      <FormInputText name="pageCount" control={control} label="Page Count" />
+      <FormInputText
+        name="pageCount"
+        showValue={defaultValues.pageCount}
+        control={control}
+        label="Page Count"
+      />
       <FormInputRadio
         name="printFormat"
         control={control}

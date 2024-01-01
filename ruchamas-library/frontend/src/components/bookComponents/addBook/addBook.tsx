@@ -35,22 +35,26 @@ export default function AddBook() {
         coverImage: data.imageLinks.thumbnail,
         author: data.authors[0],
         language: data.language,
-        publisher: "?", //! change to publisher selected from db. option: auto add publisher and if not in DB ask the user to add publisher to db
+        publisher: bookData.publisher, //! change to publisher selected from db. option: auto add publisher and if not in DB ask the user to add publisher to db
         publicationDate: data.publishedDate.split("-").reverse().join("-"),
         genre: data.categories[0],
-        format: "?", //! change to paperback/hardcover according to choice
+        format: bookData.format, //! change to paperback/hardcover according to choice
         pages: data.pageCount, //! add option to set a different page count if is incorrect
         ISBN: isbn, //! check if not already in db, suggest adding more to count if yes
       }
       setBookData(information)
+      setFormValues((prev) => ({
+        ...formValues,
+        pageCount: data.pageCount,
+      }))
     })
     console.log(bookData)
   }, [])
 
   const [formValues, setFormValues] = useState<FormInput>({
-    ISBN: 0,
+    ISBN: isbn,
     publisher: "",
-    pageCount: 0,
+    pageCount: bookData.pages,
     printFormat: coverTypes.PAPERBACK,
   })
 
@@ -60,6 +64,7 @@ export default function AddBook() {
   }
 
   useEffect(() => {
+    setIsbn(formValues.ISBN)
     setBookData((prev) => ({
       ...prev,
       publisher: formValues.publisher,

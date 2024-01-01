@@ -12,9 +12,9 @@ interface bookInformation {
   publisher: string
   publicationDate: string
   genre: string
-  format: coverTypes | string
-  pages: number | string
-  ISBN: number | string
+  format: coverTypes
+  pages: number
+  ISBN: number
 }
 
 const defaultBookInfo: bookInformation = {
@@ -27,9 +27,9 @@ const defaultBookInfo: bookInformation = {
   publisher: "?",
   publicationDate: "?",
   genre: "?",
-  format: "?",
-  pages: "?",
-  ISBN: "?",
+  format: coverTypes.PAPERBACK,
+  pages: 0,
+  ISBN: 0,
 }
 
 interface FormInputProps {
@@ -37,6 +37,7 @@ interface FormInputProps {
   control: any
   label: string
   setValue?: any
+  showValue?: any
 }
 
 interface FormInput {

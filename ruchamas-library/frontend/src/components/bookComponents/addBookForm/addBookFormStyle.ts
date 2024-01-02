@@ -1,4 +1,5 @@
 import { SxProps } from "@mui/material"
+import { orange } from "@mui/material/colors"
 
 const addBookFormContainerSx: SxProps = {
   display: "grid",
@@ -10,4 +11,8 @@ const addBookFormContainerSx: SxProps = {
   borderRadius: "0.1em",
 }
 
-export { addBookFormContainerSx }
+const requiredAsterisk: SxProps = {
+  "& .MuiFormLabel-asterisk": { color: orange[700] },
+}
+
+export { addBookFormContainerSx, requiredAsterisk }

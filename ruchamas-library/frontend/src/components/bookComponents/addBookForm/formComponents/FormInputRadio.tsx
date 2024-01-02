@@ -10,6 +10,7 @@ import { Controller } from "react-hook-form"
 import { FormInputProps } from "../../../../data.consts"
 
 import { coverTypes } from "../../../../../src/data.consts"
+import { requiredAsterisk } from "../addBookFormStyle"
 
 const options = [
   {
@@ -33,13 +34,16 @@ export const FormInputRadio: React.FC<FormInputProps> = ({
         value={singleOption.value}
         label={singleOption.label}
         control={<Radio />}
+        key={singleOption.label}
       />
     ))
   }
 
   return (
     <FormControl component="fieldset">
-      <FormLabel component="legend">{label}</FormLabel>
+      <FormLabel component="legend" required={true} sx={requiredAsterisk}>
+        {label}
+      </FormLabel>
       <Controller
         name={name}
         control={control}

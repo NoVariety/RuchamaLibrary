@@ -62,20 +62,24 @@ export default function BookPreview({ bookInfo }: Props) {
     <Container sx={previewContainerSx}>
       <Container sx={marginContainerSx}>
         <Stack direction="column">
-          <Typography sx={titleSx}>
+          <Container sx={titleSx}>
             {bookInfo.title}
             <Tooltip title={bookInfo.summary} arrow>
               <Container sx={summaryIconSx} disableGutters></Container>
             </Tooltip>
-          </Typography>
+          </Container>
 
           <Container sx={getCoverImageSx(bookInfo.coverImage)}></Container>
 
           {bookInfoMap.map((item) => {
             return (
               <Stack direction="row" sx={infoStackSx}>
-                <Typography sx={infoNameSx}>{item.infoName}</Typography>
-                <Typography sx={infoValueSx}>{item.infoValue}</Typography>
+                <Typography sx={infoNameSx} key={item.infoName}>
+                  {item.infoName}
+                </Typography>
+                <Typography sx={infoValueSx} key={item.infoValue}>
+                  {item.infoValue}
+                </Typography>
               </Stack>
             )
           })}

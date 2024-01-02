@@ -1,13 +1,13 @@
 import { PaletteMode, SxProps } from "@mui/material"
-import { amber, deepOrange, grey } from "@mui/material/colors"
+import { blue, grey } from "@mui/material/colors"
 
 const getDesignTokens = (mode: PaletteMode) => ({
   palette: {
     mode,
     ...(mode === "light"
       ? {
-          primary: amber,
-          divider: amber[200],
+          primary: blue,
+          divider: blue[200],
           background: {
             default: "white",
           },
@@ -17,10 +17,10 @@ const getDesignTokens = (mode: PaletteMode) => ({
           },
         }
       : {
-          primary: deepOrange,
-          divider: deepOrange[700],
+          primary: blue,
+          divider: blue[700],
           background: {
-            default: deepOrange[900],
+            default: blue[900],
           },
           text: {
             primary: "#fff",

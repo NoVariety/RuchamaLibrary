@@ -17,6 +17,21 @@ interface bookInformation {
   ISBN: number
 }
 
+interface FormInputProps {
+  name: string
+  control: any
+  label: string
+  setValue?: any
+  errorMessage?: string
+}
+
+interface FormInput {
+  ISBN: number
+  publisher: string //! set to publisher object
+  pageCount: number
+  printFormat: coverTypes
+}
+
 const defaultBookInfo: bookInformation = {
   summary: "?",
   title: "?",
@@ -32,20 +47,7 @@ const defaultBookInfo: bookInformation = {
   ISBN: 0,
 }
 
-interface FormInputProps {
-  name: string
-  control: any
-  label: string
-  setValue?: any
-  showValue?: any
-}
-
-interface FormInput {
-  ISBN: number
-  publisher: string //! set to publisher object
-  pageCount: number
-  printFormat: coverTypes
-}
+const ISBN_LENGTH: number = 13
 
 export {
   coverTypes,
@@ -53,4 +55,5 @@ export {
   type FormInputProps,
   type FormInput,
   defaultBookInfo,
+  ISBN_LENGTH,
 }

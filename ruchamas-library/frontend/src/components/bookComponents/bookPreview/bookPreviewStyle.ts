@@ -1,13 +1,8 @@
 import { SxProps } from "@mui/material"
 
-const previewContainerSx: SxProps = {
-  height: "auto",
-  width: "22em",
-  //   transform: "scale(0.75)",
-}
-
 const marginContainerSx: SxProps = {
-  width: "auto",
+  // transform: "scale(0.75)",
+  width: "20em",
   height: "100%",
   backgroundColor: "background.default",
   border: ".1em solid",
@@ -84,7 +79,6 @@ function getCoverImageSx(imagePath: string): SxProps {
 }
 
 export {
-  previewContainerSx,
   marginContainerSx,
   infoStackSx,
   infoNameSx,

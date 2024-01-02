@@ -14,22 +14,27 @@ type Props = {
   defaultValues: FormInput
   onSubmit: (data: FormInput) => void
   setIsbn: Dispatch<SetStateAction<number>>
+  setFormValues: Dispatch<SetStateAction<FormInput>>
 }
 
 export default function AddBookForm({
   defaultValues,
   onSubmit,
   setIsbn,
+  setFormValues,
 }: Props) {
   const methods = useForm<FormInput>({ defaultValues: defaultValues })
   const { handleSubmit, reset, control, setValue, watch, register } = methods
 
   const watchISBN = watch("ISBN")
+  const watchPageCount = watch("pageCount")
 
   useEffect(() => {
-    // if (watchISBN <= ISBN_LENGTH + 1 && watchISBN >= ISBN_LENGTH - 1) {
     setIsbn(watchISBN)
-    // }
+    setFormValues((prev) => ({
+      ...prev,
+      pageCount: watchPageCount,
+    }))
   }, [watchISBN])
 
   return (

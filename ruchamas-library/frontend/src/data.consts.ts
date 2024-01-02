@@ -39,7 +39,7 @@ const defaultBookInfo: bookInformation = {
     "https://cdn.bookauthority.org/dist/images/book-cover-not-available.6b5a104fa66be4eec4fd16aebd34fe04.png",
   author: "?",
   language: "?",
-  publisher: "?",
+  publisher: "",
   publicationDate: "?",
   genre: "?",
   format: coverTypes.PAPERBACK,

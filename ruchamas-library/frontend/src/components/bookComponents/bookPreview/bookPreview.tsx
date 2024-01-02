@@ -5,7 +5,6 @@ import {
   infoStackSx,
   infoValueSx,
   marginContainerSx,
-  previewContainerSx,
   summaryIconSx,
   titleSx,
 } from "./bookPreviewStyle"
@@ -33,7 +32,10 @@ export default function BookPreview({ bookInfo }: Props) {
     },
     {
       infoName: "Publisher",
-      infoValue: bookInfo.publisher,
+      infoValue:
+        bookInfo.publisher !== defaultBookInfo.publisher
+          ? bookInfo.publisher
+          : "?",
     },
     {
       infoName: "Publication date",
@@ -59,32 +61,30 @@ export default function BookPreview({ bookInfo }: Props) {
   ]
 
   return (
-    <Container sx={previewContainerSx}>
-      <Container sx={marginContainerSx}>
-        <Stack direction="column">
-          <Container sx={titleSx}>
-            {bookInfo.title}
-            <Tooltip title={bookInfo.summary} arrow>
-              <Container sx={summaryIconSx} disableGutters></Container>
-            </Tooltip>
-          </Container>
+    <Container sx={marginContainerSx}>
+      <Stack direction="column">
+        <Container sx={titleSx}>
+          {bookInfo.title}
+          <Tooltip title={bookInfo.summary} arrow>
+            <Container sx={summaryIconSx} disableGutters></Container>
+          </Tooltip>
+        </Container>
 
-          <Container sx={getCoverImageSx(bookInfo.coverImage)}></Container>
+        <Container sx={getCoverImageSx(bookInfo.coverImage)}></Container>
 
-          {bookInfoMap.map((item) => {
-            return (
-              <Stack direction="row" sx={infoStackSx}>
-                <Typography sx={infoNameSx} key={item.infoName}>
-                  {item.infoName}
-                </Typography>
-                <Typography sx={infoValueSx} key={item.infoValue}>
-                  {item.infoValue}
-                </Typography>
-              </Stack>
-            )
-          })}
-        </Stack>
-      </Container>
+        {bookInfoMap.map((item) => {
+          return (
+            <Stack direction="row" sx={infoStackSx}>
+              <Typography sx={infoNameSx} key={item.infoName}>
+                {item.infoName}
+              </Typography>
+              <Typography sx={infoValueSx} key={item.infoValue}>
+                {item.infoValue}
+              </Typography>
+            </Stack>
+          )
+        })}
+      </Stack>
     </Container>
   )
 }

@@ -1,5 +1,12 @@
 import React from "react"
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material"
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SxProps,
+  TextField,
+} from "@mui/material"
 import { useFormContext, Controller } from "react-hook-form"
 import { FormInputProps } from "../../../../data.consts"
 import { requiredAsterisk } from "../addBookFormStyle"
@@ -32,19 +39,20 @@ export const FormInputDropdown: React.FC<FormInputProps> = ({
 
   return (
     <FormControl size={"small"}>
-      <InputLabel required={true} sx={requiredAsterisk}>
-        {label}
-      </InputLabel>
       <Controller
-        render={({ field: { onChange, value } }) => (
-          <Select
+        render={({ field: { onChange, value }, fieldState: { error } }) => (
+          <TextField
+            select
+            size="small"
             onChange={onChange}
             value={value}
             label={label}
             required={true}
+            error={error && true}
+            sx={!error ? requiredAsterisk : {}}
           >
             {generateSingleOptions()}
-          </Select>
+          </TextField>
         )}
         control={control}
         name={name}

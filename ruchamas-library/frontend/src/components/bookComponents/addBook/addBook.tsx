@@ -37,9 +37,6 @@ export default function AddBook() {
       let information: bookInformation = defaultBookInfo
 
       if (getISBNLength() === ISBN_LENGTH && response.data.totalItems > 0) {
-        // console.log(getISBNLength())
-        // console.log(response.data.items[0])
-
         const data = response.data.items[0].volumeInfo
         information = {
           summary: data.description,
@@ -55,17 +52,16 @@ export default function AddBook() {
           ISBN: isbn, //! check if not already in db, suggest adding more to count if yes
         }
       }
-      setBookData({ ...information, ISBN: formValues.ISBN })
+
+      setBookData(information)
       setFormValues((prev) => ({
         ...formValues,
         pageCount: information.pages,
+        ISBN: isbn,
       }))
-
       setWasRequestMade(true)
+      console.log("formvalue pagecount: " + information.pages)
     })
-    console.log(isbn)
-
-    // console.log(bookData)
   }, [isbn])
 
   const [formValues, setFormValues] = useState<FormInput>({
@@ -84,12 +80,15 @@ export default function AddBook() {
   //TODO: and when its not isbn length(*const value?) long set it all to default values
 
   useEffect(() => {
-    setBookData((prev) => ({
-      ...prev,
-      publisher: formValues.publisher,
-      pages: formValues.pageCount,
-      format: formValues.printFormat,
-    }))
+    console.log("bd " + bookData.pages)
+    console.log("fv " + formValues.pageCount)
+
+    // setBookData((prev) => ({
+    //   ...prev,
+    //   publisher: formValues.publisher,
+    //   pages: formValues.pageCount,
+    //   format: formValues.printFormat,
+    // }))
   }, [formValues])
 
   return (
@@ -100,6 +99,7 @@ export default function AddBook() {
             defaultValues={formValues}
             onSubmit={onSubmit}
             setIsbn={setIsbn}
+            setFormValues={setFormValues}
           />
         )}
         <BookPreview bookInfo={bookData} />

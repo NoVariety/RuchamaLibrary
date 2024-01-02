@@ -4,6 +4,7 @@ import { addBookContainerSx } from "./addBookStyle"
 
 import {
   FormInput,
+  ISBN_LENGTH,
   bookInformation,
   coverTypes,
   defaultBookInfo,
@@ -23,16 +24,24 @@ export default function AddBook() {
   //? tunnel to summer
   // const [isbn, setIsbn] = useState<number>(9781638584155)
   //? dune
-  // const [isbn, setIsbn] = useState<number>(9780340960196)
-  const [isbn, setIsbn] = useState<number>(9990340960196)
+  const [isbn, setIsbn] = useState<number>(9780340960196)
+  //? invalid
+  // const [isbn, setIsbn] = useState<number>(9990340960196)
+
+  const getISBNLength = (): number => isbn.toString().length
 
   //! add try catch in case fetching book failed and make a proper alert for it
   //* cool idea to maybe implement later: make the fields editable so you can change whatever you like in the final result
   useEffect(() => {
     fetchBooksApi(isbn).then((response) => {
-      if (response.data.totalItems > 0) {
+      let information: bookInformation = defaultBookInfo
+
+      if (getISBNLength() === ISBN_LENGTH && response.data.totalItems > 0) {
+        // console.log(getISBNLength())
+        // console.log(response.data.items[0])
+
         const data = response.data.items[0].volumeInfo
-        const information: bookInformation = {
+        information = {
           summary: data.description,
           title: data.title,
           coverImage: data.imageLinks.thumbnail,
@@ -45,17 +54,19 @@ export default function AddBook() {
           pages: data.pageCount, //! add option to set a different page count if is incorrect
           ISBN: isbn, //! check if not already in db, suggest adding more to count if yes
         }
-        setBookData(information)
-        setFormValues((prev) => ({
-          ...formValues,
-          pageCount: data.pageCount,
-        }))
       }
+      setBookData({ ...information, ISBN: formValues.ISBN })
+      setFormValues((prev) => ({
+        ...formValues,
+        pageCount: information.pages,
+      }))
 
       setWasRequestMade(true)
     })
-    console.log(bookData)
-  }, [])
+    console.log(isbn)
+
+    // console.log(bookData)
+  }, [isbn])
 
   const [formValues, setFormValues] = useState<FormInput>({
     ISBN: isbn,
@@ -65,7 +76,6 @@ export default function AddBook() {
   })
 
   const onSubmit = (data: FormInput) => {
-    console.log(data)
     setFormValues(data)
   }
 
@@ -74,7 +84,6 @@ export default function AddBook() {
   //TODO: and when its not isbn length(*const value?) long set it all to default values
 
   useEffect(() => {
-    setIsbn(formValues.ISBN)
     setBookData((prev) => ({
       ...prev,
       publisher: formValues.publisher,
@@ -87,7 +96,11 @@ export default function AddBook() {
     <Container sx={addBookContainerSx}>
       <Stack direction="row">
         {wasRequestMade && (
-          <AddBookForm defaultValues={formValues} onSubmit={onSubmit} />
+          <AddBookForm
+            defaultValues={formValues}
+            onSubmit={onSubmit}
+            setIsbn={setIsbn}
+          />
         )}
         <BookPreview bookInfo={bookData} />
       </Stack>

@@ -8,17 +8,29 @@ import { FormInputRadio } from "./formComponents/FormInputRadio"
 
 import { addBookFormContainerSx } from "./addBookFormStyle"
 import { FormInput, ISBN_LENGTH } from "../../../data.consts"
+import { Dispatch, SetStateAction, useEffect } from "react"
 
 type Props = {
   defaultValues: FormInput
   onSubmit: (data: FormInput) => void
+  setIsbn: Dispatch<SetStateAction<number>>
 }
 
-export default function AddBookForm({ defaultValues, onSubmit }: Props) {
+export default function AddBookForm({
+  defaultValues,
+  onSubmit,
+  setIsbn,
+}: Props) {
   const methods = useForm<FormInput>({ defaultValues: defaultValues })
   const { handleSubmit, reset, control, setValue, watch, register } = methods
 
-  //add validate isbn with error message
+  const watchISBN = watch("ISBN")
+
+  useEffect(() => {
+    // if (watchISBN <= ISBN_LENGTH + 1 && watchISBN >= ISBN_LENGTH - 1) {
+    setIsbn(watchISBN)
+    // }
+  }, [watchISBN])
 
   return (
     <Container sx={addBookFormContainerSx}>
@@ -26,7 +38,7 @@ export default function AddBookForm({ defaultValues, onSubmit }: Props) {
 
       <FormInputText
         control={control}
-        label="ISBN"
+        label={"ISBN"}
         {...register("ISBN", {
           minLength: ISBN_LENGTH,
           maxLength: ISBN_LENGTH,

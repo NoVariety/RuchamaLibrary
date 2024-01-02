@@ -1,4 +1,4 @@
-import { Button, Container, Paper, Typography } from "@mui/material"
+import { Button, Container, TextField, Typography } from "@mui/material"
 
 import { useForm } from "react-hook-form"
 
@@ -14,33 +14,37 @@ type Props = {
   defaultValues: FormInput
   onSubmit: (data: FormInput) => void
   setIsbn: Dispatch<SetStateAction<number>>
-  setFormValues: Dispatch<SetStateAction<FormInput>>
 }
 
 export default function AddBookForm({
   defaultValues,
   onSubmit,
   setIsbn,
-  setFormValues,
 }: Props) {
-  const methods = useForm<FormInput>({ defaultValues: defaultValues })
-  const { handleSubmit, reset, control, setValue, watch, register } = methods
+  const methods = useForm<FormInput>({ defaultValues })
+  const {
+    control,
+    handleSubmit,
+    reset,
+    resetField,
+    setValue,
+    watch,
+    register,
+  } = methods
 
   const watchISBN = watch("ISBN")
-  const watchPageCount = watch("pageCount")
 
   useEffect(() => {
     setIsbn(watchISBN)
-    setFormValues((prev) => ({
-      ...prev,
-      pageCount: watchPageCount,
-    }))
+
+    resetField("publisher", { defaultValue: defaultValues.publisher })
+    resetField("pageCount", { defaultValue: defaultValues.pageCount })
+    resetField("printFormat", { defaultValue: defaultValues.printFormat })
   }, [watchISBN])
 
   return (
     <Container sx={addBookFormContainerSx}>
       <Typography variant="h6">Add Book</Typography>
-
       <FormInputText
         control={control}
         label={"ISBN"}

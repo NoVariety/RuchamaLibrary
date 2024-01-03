@@ -1,5 +1,4 @@
 import { Request, Response } from "express"
-
 import { getAllBooks } from "../services/booksService"
 
 //! add middleware instead of try catch

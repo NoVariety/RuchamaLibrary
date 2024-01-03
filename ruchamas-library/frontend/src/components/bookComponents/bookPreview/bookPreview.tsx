@@ -33,7 +33,8 @@ export default function BookPreview({ bookInfo }: Props) {
     {
       infoName: "Publisher",
       infoValue:
-        bookInfo.publisher !== defaultBookInfo.publisher
+        bookInfo.author !== defaultBookInfo.author ||
+        bookInfo.publicationDate !== defaultBookInfo.publicationDate
           ? bookInfo.publisher
           : "?",
     },
@@ -48,7 +49,10 @@ export default function BookPreview({ bookInfo }: Props) {
     {
       infoName: "Format",
       infoValue:
-        bookInfo.author !== defaultBookInfo.author ? bookInfo.format : "?",
+        bookInfo.author !== defaultBookInfo.author ||
+        bookInfo.publicationDate !== defaultBookInfo.publicationDate
+          ? bookInfo.format
+          : "?",
     },
     {
       infoName: "Pages",

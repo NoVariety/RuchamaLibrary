@@ -1,12 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm"
+import { Entity, Column, OneToMany, PrimaryColumn } from "typeorm"
 import LibBooks from "./libBooks"
 
 @Entity()
 export default class LibPublishers {
-  @PrimaryGeneratedColumn()
-  id: number
-
-  @Column("varchar")
+  @PrimaryColumn("varchar")
   name: string
 
   @Column("date")

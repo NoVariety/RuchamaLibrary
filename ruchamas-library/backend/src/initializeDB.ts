@@ -19,10 +19,39 @@ export default function initializeDB(dataSource: DataSource): void {
   dataSource
     .initialize()
     .then(async () => {
+      //! publishers
       // const publisher = new LibPublishers()
       // publisher.name = "Seven Seas Entertainment"
       // publisher.foundingDate = new Date()
       // publisher.originCountry = "California"
+      // const publisher2 = new LibPublishers()
+      // publisher2.name = "Comma Press"
+      // publisher2.foundingDate = new Date()
+      // publisher2.originCountry = "USA"
+      // const publisher3 = new LibPublishers()
+      // publisher3.name = "Artisan Books"
+      // publisher3.foundingDate = new Date("1994-03-15")
+      // publisher3.originCountry = "New York"
+      // const publisher4 = new LibPublishers()
+      // publisher4.name = "Crown Publishing"
+      // publisher4.foundingDate = new Date("1933-01-03")
+      // publisher4.originCountry = "New York"
+      // const publisher5 = new LibPublishers()
+      // publisher5.name = "Penguin Random House"
+      // publisher5.foundingDate = new Date("2013-07-01")
+      // publisher5.originCountry = "USA"
+      // const publisher6 = new LibPublishers()
+      // publisher6.name = "YenPress"
+      // publisher6.foundingDate = new Date("2006-01-01")
+      // publisher6.originCountry = "New York"
+      // const publisherRepository = dataSource.getRepository(LibPublishers)
+      // await publisherRepository.save(publisher)
+      // await publisherRepository.save(publisher2)
+      // await publisherRepository.save(publisher3)
+      // await publisherRepository.save(publisher4)
+      // await publisherRepository.save(publisher5)
+      // await publisherRepository.save(publisher6)
+      //! books
       // const book = new LibBooks()
       // book.id = 9780345376596
       // book.title = "The Tunnel to Summer, the Exit of Goodbyes (Light Novel)"
@@ -39,9 +68,7 @@ export default function initializeDB(dataSource: DataSource): void {
       // book.pageCount = 350
       // book.price = 14.99
       // book.copies = 3
-      // const publisherRepository = dataSource.getRepository(LibPublishers)
       // const bookRepository = dataSource.getRepository(LibBooks)
-      // await publisherRepository.save(publisher)
       // await bookRepository.save(book)
     })
     .catch((error) => console.log(error))

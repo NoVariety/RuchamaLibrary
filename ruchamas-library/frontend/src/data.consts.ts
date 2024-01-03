@@ -3,13 +3,25 @@ enum coverTypes {
   PAPERBACK = "Paperback",
 }
 
+interface Publisher {
+  name: string
+  foundingDate: Date
+  originCountry: string
+}
+
+type DropdownOptionsType = Array<{
+  key: string
+  value: string
+  label: string
+}>
+
 interface bookInformation {
   summary: string
   title: string
   coverImage: string
   author: string
   language: string
-  publisher: string
+  publisher: Publisher | null
   publicationDate: string
   genre: string
   format: coverTypes
@@ -23,11 +35,12 @@ interface FormInputProps {
   label: string
   setValue?: any
   errorMessage?: string
+  dropdownOptions?: DropdownOptionsType
 }
 
 interface FormInput {
   ISBN: number
-  publisher: string //! set to publisher object
+  publisherName: string
   pageCount: number
   printFormat: coverTypes
 }
@@ -39,10 +52,10 @@ const defaultBookInfo: bookInformation = {
     "https://cdn.bookauthority.org/dist/images/book-cover-not-available.6b5a104fa66be4eec4fd16aebd34fe04.png",
   author: "?",
   language: "?",
-  publisher: "",
+  publisher: null,
   publicationDate: "?",
   genre: "?",
-  format: coverTypes.PAPERBACK,
+  format: coverTypes.HARDCOVER,
   pages: 0,
   ISBN: 0,
 }
@@ -51,9 +64,11 @@ const ISBN_LENGTH: number = 13
 
 export {
   coverTypes,
+  type Publisher,
   type bookInformation,
   type FormInputProps,
   type FormInput,
+  type DropdownOptionsType,
   defaultBookInfo,
   ISBN_LENGTH,
 }

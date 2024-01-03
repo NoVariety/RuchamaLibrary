@@ -8,29 +8,40 @@ import { FormInputRadio } from "./formComponents/FormInputRadio"
 
 import { addBookFormContainerSx } from "./addBookFormStyle"
 import {
+  DropdownOptionsType,
   FormInput,
   ISBN_LENGTH,
+  Publisher,
   bookInformation,
   defaultBookInfo,
 } from "../../../data.consts"
-import { Dispatch, SetStateAction, useEffect } from "react"
-import { fetchBooksApi } from "../../../APIs/googleBooks"
+import { Dispatch, MutableRefObject, SetStateAction, useEffect } from "react"
+import { fetchBooksApi } from "../../../APIs/googleBooksAPI"
 
 type Props = {
   defaultValues: FormInput
-  onSubmit: (data: FormInput) => void
   setBookData: Dispatch<SetStateAction<bookInformation>>
   bookData: bookInformation
+  allPublishers: MutableRefObject<Publisher[]>
 }
 
 export default function AddBookForm({
   defaultValues,
-  onSubmit,
   setBookData,
   bookData,
+  allPublishers,
 }: Props) {
   const methods = useForm<FormInput>({ defaultValues })
-  const { control, handleSubmit, reset, resetField, watch, register } = methods
+  const {
+    control,
+    handleSubmit,
+    reset,
+    resetField,
+    watch,
+    register,
+    formState,
+    formState: { isSubmitSuccessful },
+  } = methods
 
   //? tunnel to summer
   // 9781638584155
@@ -45,9 +56,7 @@ export default function AddBookForm({
   }, [watchISBN])
 
   useEffect(() => {
-    resetField("publisher", { defaultValue: defaultValues.publisher })
     resetField("pageCount", { defaultValue: defaultValues.pageCount })
-    resetField("printFormat", { defaultValue: defaultValues.printFormat })
   }, [bookData])
 
   const getISBNLength = (): number => watchISBN.toString().length
@@ -77,6 +86,44 @@ export default function AddBookForm({
     })
   }
 
+  const watchPrintFormat = watch("printFormat")
+  const watchPublisherName = watch("publisherName")
+
+  useEffect(() => {
+    const publisher: Publisher | undefined = allPublishers.current.find(
+      (p) => p.name === watchPublisherName
+    )
+    setBookData((prev) => ({
+      ...prev,
+      format: watchPrintFormat,
+      publisher: publisher ? publisher : null,
+    }))
+  }, [watchPrintFormat, watchPublisherName])
+
+  const onSubmit = (data: FormInput) => {
+    const publisher: Publisher | undefined = allPublishers.current.find(
+      (p) => p.name === data.publisherName
+    )
+
+    setBookData((prev) => ({
+      ...prev,
+      publisher: publisher ? publisher : null,
+      pages: data.pageCount,
+      format: data.printFormat,
+    }))
+
+    console.log("updated publisher")
+  }
+
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      console.log(bookData)
+      //! add book to db here
+
+      reset()
+    }
+  }, [formState])
+
   return (
     <Container sx={addBookFormContainerSx}>
       <Typography variant="h6">Add Book</Typography>
@@ -93,9 +140,16 @@ export default function AddBookForm({
       <FormInputDropdown
         control={control}
         label="Publisher"
-        {...register("publisher", {
+        {...register("publisherName", {
           required: true,
         })}
+        dropdownOptions={
+          allPublishers.current.map((publisher) => ({
+            key: publisher.name,
+            value: publisher.name,
+            label: publisher.name,
+          })) as DropdownOptionsType
+        }
       />
       <FormInputText
         control={control}

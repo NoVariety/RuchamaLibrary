@@ -13,7 +13,7 @@ import { bookInformation, defaultBookInfo } from "../../../data.consts"
 
 type bookInfoNameValue = {
   infoName: string
-  infoValue: string | number
+  infoValue: any
 }
 
 type Props = {
@@ -32,11 +32,7 @@ export default function BookPreview({ bookInfo }: Props) {
     },
     {
       infoName: "Publisher",
-      infoValue:
-        bookInfo.author !== defaultBookInfo.author ||
-        bookInfo.publicationDate !== defaultBookInfo.publicationDate
-          ? bookInfo.publisher
-          : "?",
+      infoValue: bookInfo.publisher ? bookInfo.publisher.name : "?",
     },
     {
       infoName: "Publication date",

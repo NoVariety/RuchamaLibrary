@@ -1,36 +1,19 @@
 import React from "react"
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SxProps,
-  TextField,
-} from "@mui/material"
-import { useFormContext, Controller } from "react-hook-form"
+import { FormControl, MenuItem, TextField } from "@mui/material"
+import { Controller } from "react-hook-form"
 import { FormInputProps } from "../../../../data.consts"
 import { requiredAsterisk } from "../addBookFormStyle"
-
-const options = [
-  {
-    label: "publisher a",
-    value: "1",
-  },
-  {
-    label: "publisher b",
-    value: "2",
-  },
-]
 
 export const FormInputDropdown: React.FC<FormInputProps> = ({
   name,
   control,
   label,
+  dropdownOptions,
 }) => {
   const generateSingleOptions = () => {
-    return options.map((option: any) => {
+    return dropdownOptions?.map((option) => {
       return (
-        <MenuItem key={option.value} value={option.value}>
+        <MenuItem key={option.key} value={option.value}>
           {option.label}
         </MenuItem>
       )

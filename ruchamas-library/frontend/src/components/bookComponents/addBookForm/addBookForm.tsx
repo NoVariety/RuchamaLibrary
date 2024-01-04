@@ -126,7 +126,7 @@ export default function AddBookForm({
     } else {
       if (!doesBookExist()) {
         watchISBN !== defaultBookInfo.id &&
-          alert(`No book with the ISBN: ${watchISBN} exists!`) //! change to swal
+          alert(`No book exists with the ISBN: ${watchISBN}!`) //! change to swal
       } else {
         addBookToDBIfNew()
       }

@@ -67,6 +67,7 @@ const titleSx: SxProps = {
   textAlign: "center",
   fontWeight: "bold",
   marginBottom: "none !important",
+  marginTop: "0.5rem",
 }
 
 function getCoverImageSx(imagePath: string): SxProps {

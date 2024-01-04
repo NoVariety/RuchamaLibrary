@@ -1,6 +1,11 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 
-import { appContainerSx, getDesignTokens } from "./AppStyle"
+import {
+  appContainerSx,
+  getDesignTokens,
+  propertyContainerSx,
+  refreshButtonSx,
+} from "./AppStyle"
 
 import {
   Button,
@@ -9,7 +14,13 @@ import {
   ThemeProvider,
   createTheme,
 } from "@mui/material"
+
 import AddBook from "./components/bookComponents/addBook/addBook"
+import ShowBooks from "./components/bookComponents/showBooks/showBooks"
+import NavBar from "./components/navBar/navBar"
+
+import { LibBooks } from "./data.consts"
+import { fetchAllBooks } from "./APIs/LibBooksAPI"
 
 function App() {
   const [mode, setMode] = React.useState<PaletteMode>("light")
@@ -27,10 +38,39 @@ function App() {
   // Update the theme only if the mode changes
   const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode])
 
+  const [books, setBooks] = useState<Array<LibBooks>>()
+
+  const [openAddBook, setOpenAddBook] = useState<boolean>(false)
+
+  useEffect(() => {
+    getBooksFromDB()
+  }, [])
+
+  function getBooksFromDB(): void {
+    fetchAllBooks()
+      .then((response) => {
+        setBooks(response.data)
+      })
+      .catch((error) => console.log("Failed to fetch books from DB"))
+  }
+
   return (
     <ThemeProvider theme={theme}>
+      <NavBar setOpenAddBook={setOpenAddBook} />
       <Container sx={appContainerSx}>
-        <AddBook />
+        <Container sx={propertyContainerSx}>
+          {openAddBook && <AddBook />}
+        </Container>
+        <Container sx={propertyContainerSx}>
+          {books && <ShowBooks books={books} />}
+        </Container>
+        <Button
+          variant="contained"
+          onClick={getBooksFromDB}
+          sx={refreshButtonSx}
+        >
+          Refresh Books
+        </Button>
       </Container>
     </ThemeProvider>
   )

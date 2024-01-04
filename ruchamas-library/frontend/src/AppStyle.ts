@@ -42,4 +42,17 @@ const appContainerSx: SxProps = {
   overflow: "show",
 }
 
-export { getDesignTokens, appContainerSx }
+const propertyContainerSx: SxProps = {
+  width: "auto",
+  height: "auto",
+  margin: "2rem",
+}
+
+const refreshButtonSx: SxProps = {
+  position: "fixed",
+  bottom: "0.5rem",
+  right: "0.5rem",
+  zIndex: "100",
+}
+
+export { getDesignTokens, appContainerSx, propertyContainerSx, refreshButtonSx }

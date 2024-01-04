@@ -11,6 +11,7 @@ const getDesignTokens = (mode: PaletteMode) => ({
           background: {
             default: "white",
             main: teal[500],
+            weak: teal[50],
             strong: teal[600],
           },
           text: {
@@ -37,9 +38,12 @@ const getDesignTokens = (mode: PaletteMode) => ({
 })
 
 const appContainerSx: SxProps = {
-  height: "100vh",
-  width: "100vw",
+  minHeight: "100%",
+  height: "100%",
+
+  backgroundColor: "background.weak",
   overflow: "show",
+  flexGrow: 1,
 }
 
 const propertyContainerSx: SxProps = {

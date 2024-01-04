@@ -7,10 +7,10 @@ import {
   RadioGroup,
 } from "@mui/material"
 import { Controller } from "react-hook-form"
-import { FormInputProps } from "../../../../data.consts"
+import { FormInputProps } from "../../data.consts"
 
-import { coverTypes } from "../../../../../src/data.consts"
-import { requiredAsterisk } from "../addBookFormStyle"
+import { coverTypes } from "../../data.consts"
+import { requiredAsterisk } from "./formComponentsStyle"
 
 const options = [
   {

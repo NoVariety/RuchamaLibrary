@@ -25,7 +25,6 @@ const requestFindIfBookExists = async (req: Request, res: Response) => {
 const sendAddBookToDB = async (req: Request, res: Response) => {
   try {
     console.log(req.body)
-    console.log(res.body)
     res.send(await addBookToDB(req.body))
   } catch (error) {
     res.send(error)

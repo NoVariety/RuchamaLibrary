@@ -1,8 +1,8 @@
 import React from "react"
 import { FormControl, MenuItem, TextField } from "@mui/material"
 import { Controller } from "react-hook-form"
-import { FormInputProps } from "../../../../data.consts"
-import { requiredAsterisk } from "../addBookFormStyle"
+import { FormInputProps } from "../../data.consts"
+import { requiredAsterisk } from "./formComponentsStyle"
 
 export const FormInputDropdown: React.FC<FormInputProps> = ({
   name,

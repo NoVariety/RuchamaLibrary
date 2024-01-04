@@ -21,6 +21,7 @@ import NavBar from "./components/navBar/navBar"
 
 import { LibBooks } from "./data.consts"
 import { fetchAllBooks } from "./APIs/LibBooksAPI"
+import AddReader from "./components/readerComponents/addReader/addReader"
 
 function App() {
   const [mode, setMode] = React.useState<PaletteMode>("light")
@@ -41,6 +42,7 @@ function App() {
   const [books, setBooks] = useState<Array<LibBooks>>()
 
   const [openAddBook, setOpenAddBook] = useState<boolean>(false)
+  const [openAddReader, setOpenAddReader] = useState<boolean>(false)
 
   useEffect(() => {
     getBooksFromDB()
@@ -56,9 +58,15 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavBar setOpenAddBook={setOpenAddBook} />
+      <NavBar
+        openAddBook={openAddBook}
+        setOpenAddBook={setOpenAddBook}
+        openAddReader={openAddReader}
+        setOpenAddReader={setOpenAddReader}
+      />
       <Container sx={appContainerSx}>
         <Container sx={propertyContainerSx}>
+          {openAddReader && <AddReader />}
           {openAddBook && <AddBook />}
         </Container>
         <Container sx={propertyContainerSx}>

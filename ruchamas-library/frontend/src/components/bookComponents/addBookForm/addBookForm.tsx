@@ -2,9 +2,9 @@ import { Button, Container } from "@mui/material"
 
 import { useForm } from "react-hook-form"
 
-import { FormInputText } from "./formComponents/FormInputText"
-import { FormInputDropdown } from "./formComponents/FormInputDropdown"
-import { FormInputRadio } from "./formComponents/FormInputRadio"
+import { FormInputText } from "../../formComponents/FormInputText"
+import { FormInputDropdown } from "../../formComponents/FormInputDropdown"
+import { FormInputRadio } from "../../formComponents/FormInputRadio"
 
 import { addBookFormContainerSx } from "./addBookFormStyle"
 import {
@@ -142,9 +142,14 @@ export default function AddBookForm({
             alert(`The book: "${bookData.title}" is already in the database!`) //! change to swal
         } else {
           //! add book to db here
-          addNewBookToDB({ ...bookData, price: 0, copies: 0 })
+          addNewBookToDB({
+            ...bookData,
+            price: 1,
+            copies: 1,
+          })
             .then((response) => {
               if (response.status === HttpStatusCode.Ok) {
+                console.log(bookData)
                 watchISBN !== defaultBookInfo.id &&
                   alert(
                     `The book: "${bookData.title}" has been added to the database!`

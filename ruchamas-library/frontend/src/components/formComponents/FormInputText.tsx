@@ -1,7 +1,7 @@
 import { Controller } from "react-hook-form"
 import TextField from "@mui/material/TextField"
-import { FormInputProps } from "../../../../data.consts"
-import { requiredAsterisk } from "../addBookFormStyle"
+import { FormInputProps } from "../../data.consts"
+import { requiredAsterisk } from "./formComponentsStyle"
 
 export const FormInputText = ({
   name,

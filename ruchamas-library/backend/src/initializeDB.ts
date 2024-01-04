@@ -19,7 +19,7 @@ export default function initializeDB(dataSource: DataSource): void {
   dataSource
     .initialize()
     .then(async () => {
-      //! publishers
+      // // ! publishers
       // const publisher = new LibPublishers()
       // publisher.name = "Seven Seas Entertainment"
       // publisher.foundingDate = new Date()
@@ -51,7 +51,7 @@ export default function initializeDB(dataSource: DataSource): void {
       // await publisherRepository.save(publisher4)
       // await publisherRepository.save(publisher5)
       // await publisherRepository.save(publisher6)
-      //! books
+      // // ! books
       // const book = new LibBooks()
       // book.id = 9781638584155
       // book.title = "The Tunnel to Summer, the Exit of Goodbyes (Light Novel)"

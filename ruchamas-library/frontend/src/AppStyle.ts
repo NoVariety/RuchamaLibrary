@@ -10,10 +10,13 @@ const getDesignTokens = (mode: PaletteMode) => ({
           divider: blue[200],
           background: {
             default: "white",
+            main: blue[500],
+            strong: blue[600],
           },
           text: {
             primary: grey[900],
             secondary: grey[400],
+            contrast: "white",
           },
         }
       : {

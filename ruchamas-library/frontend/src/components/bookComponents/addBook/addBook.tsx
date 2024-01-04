@@ -1,13 +1,12 @@
 import { Container, Stack } from "@mui/material"
 
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 
-import { addBookContainerSx } from "./addBookStyle"
+import { mainStackSx, componentTitleSx } from "./addBookStyle"
 
 import {
-  FormInput,
   Publisher,
-  bookInformation,
+  BookInformation,
   coverTypes,
   defaultBookInfo,
 } from "../../../data.consts"
@@ -17,7 +16,7 @@ import AddBookForm from "../addBookForm/addBookForm"
 import { fetchAllPublishers } from "../../../APIs/LibPublishersAPI"
 
 export default function AddBook() {
-  const [bookData, setBookData] = useState<bookInformation>(defaultBookInfo)
+  const [bookData, setBookData] = useState<BookInformation>(defaultBookInfo)
 
   const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false)
 
@@ -28,19 +27,20 @@ export default function AddBook() {
       allPublishers.current = response.data
       setIsDataLoaded(true)
     })
-    .catch((e) => {
-      console.log(e)
+    .catch((error) => {
+      console.log(error) //! replace with swal or smthing
     })
 
   return (
-    <Container sx={addBookContainerSx}>
-      <Stack direction="row">
+    <Stack direction="row" spacing={0.2} sx={mainStackSx}>
+      <Stack>
+        <Container sx={componentTitleSx}>ADD BOOK</Container>
         {isDataLoaded && (
           <AddBookForm
             defaultValues={{
               ISBN: 0,
               publisherName: "",
-              pageCount: bookData.pages,
+              pageCount: bookData.pageCount,
               printFormat: coverTypes.PAPERBACK,
             }}
             setBookData={setBookData}
@@ -48,8 +48,11 @@ export default function AddBook() {
             allPublishers={allPublishers}
           />
         )}
+      </Stack>
+      <Stack>
+        <Container sx={componentTitleSx}>PREVIEW</Container>
         <BookPreview bookInfo={bookData} />
       </Stack>
-    </Container>
+    </Stack>
   )
 }

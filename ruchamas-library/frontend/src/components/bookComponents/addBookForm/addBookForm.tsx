@@ -1,4 +1,4 @@
-import { Button, Container, Typography } from "@mui/material"
+import { Button, Container } from "@mui/material"
 
 import { useForm } from "react-hook-form"
 
@@ -12,16 +12,24 @@ import {
   FormInput,
   ISBN_LENGTH,
   Publisher,
-  bookInformation,
+  BookInformation,
   defaultBookInfo,
 } from "../../../data.consts"
-import { Dispatch, MutableRefObject, SetStateAction, useEffect } from "react"
+import {
+  Dispatch,
+  MutableRefObject,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react"
 import { fetchBooksApi } from "../../../APIs/googleBooksAPI"
+import { addNewBookToDB, doesBookExistByISBN } from "../../../APIs/LibBooksAPI"
+import { HttpStatusCode } from "axios"
 
 type Props = {
   defaultValues: FormInput
-  setBookData: Dispatch<SetStateAction<bookInformation>>
-  bookData: bookInformation
+  setBookData: Dispatch<SetStateAction<BookInformation>>
+  bookData: BookInformation
   allPublishers: MutableRefObject<Publisher[]>
 }
 
@@ -40,15 +48,8 @@ export default function AddBookForm({
     watch,
     register,
     formState,
-    formState: { isSubmitSuccessful },
   } = methods
 
-  //? tunnel to summer
-  // 9781638584155
-  //? dune
-  // 9780340960196
-  //? invalid
-  // 9990340960196
   const watchISBN = watch("ISBN")
 
   useEffect(() => {
@@ -62,28 +63,30 @@ export default function AddBookForm({
   const getISBNLength = (): number => watchISBN.toString().length
 
   function fetchBookData(): void {
-    fetchBooksApi(watchISBN).then((response) => {
-      let information: bookInformation = defaultBookInfo
+    fetchBooksApi(watchISBN)
+      .then((response) => {
+        let information: BookInformation = defaultBookInfo
 
-      if (getISBNLength() === ISBN_LENGTH && response.data.totalItems > 0) {
-        const data = response.data.items[0].volumeInfo
-        information = {
-          summary: data.description,
-          title: data.title,
-          coverImage: data.imageLinks.thumbnail,
-          author: data.authors ? data.authors[0] : "?",
-          language: data.language,
-          publisher: bookData.publisher, //! change to publisher selected from db. option: auto add publisher and if not in DB ask the user to add publisher to db
-          publicationDate: data.publishedDate.split("-").reverse().join("-"),
-          genre: data.categories ? data.categories[0] : "?",
-          format: bookData.format,
-          pages: data.pageCount,
-          ISBN: watchISBN, //! on submit, check if not already in db, suggest adding more to count if yes
+        if (getISBNLength() === ISBN_LENGTH && response.data.totalItems > 0) {
+          const data = response.data.items[0].volumeInfo
+          information = {
+            summary: data.description,
+            title: data.title,
+            coverImage: data.imageLinks?.thumbnail,
+            author: data.authors ? data.authors[0] : "?",
+            language: data.language,
+            publisher: bookData.publisher,
+            publishDate: data.publishedDate.split("-").reverse().join("-"),
+            category: data.categories ? data.categories[0] : "?",
+            coverType: bookData.coverType,
+            pageCount: data.pageCount,
+            id: watchISBN,
+          }
         }
-      }
 
-      setBookData(information)
-    })
+        setBookData(information)
+      })
+      .catch((error) => console.log("Fetch Books API Error: " + error))
   }
 
   const watchPrintFormat = watch("printFormat")
@@ -95,38 +98,71 @@ export default function AddBookForm({
     )
     setBookData((prev) => ({
       ...prev,
-      format: watchPrintFormat,
+      coverType: watchPrintFormat,
       publisher: publisher ? publisher : null,
     }))
   }, [watchPrintFormat, watchPublisherName])
 
   const onSubmit = (data: FormInput) => {
     const publisher: Publisher | undefined = allPublishers.current.find(
-      (p) => p.name === data.publisherName
+      (currPublisher) => currPublisher.name === data.publisherName
     )
 
     setBookData((prev) => ({
       ...prev,
       publisher: publisher ? publisher : null,
-      pages: data.pageCount,
-      format: data.printFormat,
+      pageCount: data.pageCount,
+      coverType: data.printFormat,
     }))
-
-    console.log("updated publisher")
   }
 
-  useEffect(() => {
-    if (formState.isSubmitSuccessful) {
-      console.log(bookData)
-      //! add book to db here
+  const doesBookExist = (): boolean => bookData.id !== defaultBookInfo.id
 
+  const [didInitialLoadHappen, setDidInitialLoadHappen] =
+    useState<boolean>(false)
+  useEffect(() => {
+    if (!didInitialLoadHappen) {
+      setDidInitialLoadHappen(true)
+    } else {
+      if (!doesBookExist()) {
+        watchISBN !== defaultBookInfo.id &&
+          alert(`No book with the ISBN: ${watchISBN} exists!`) //! change to swal
+      } else {
+        addBookToDBIfNew()
+      }
       reset()
     }
-  }, [formState])
+  }, [formState.isSubmitSuccessful])
+
+  function addBookToDBIfNew(): void {
+    doesBookExistByISBN(bookData.id)
+      .then((response) => {
+        if (response.data) {
+          watchISBN !== defaultBookInfo.id &&
+            alert(`The book: "${bookData.title}" is already in the database!`) //! change to swal
+        } else {
+          //! add book to db here
+          addNewBookToDB({ ...bookData, price: 0, copies: 0 })
+            .then((response) => {
+              if (response.status === HttpStatusCode.Ok) {
+                watchISBN !== defaultBookInfo.id &&
+                  alert(
+                    `The book: "${bookData.title}" has been added to the database!`
+                  ) //! change to swal
+              } else {
+                alert(
+                  `An error has occured while trying to add: "${bookData.title}" to the database!`
+                ) //! change to swal
+              }
+            })
+            .catch((error) => console.log("Add New Book To DB Error: " + error))
+        }
+      })
+      .catch((error) => console.log("Does Book Exist By ISBN Error: " + error))
+  }
 
   return (
     <Container sx={addBookFormContainerSx}>
-      <Typography variant="h6">Add Book</Typography>
       <FormInputText
         control={control}
         label={"ISBN"}
@@ -135,7 +171,7 @@ export default function AddBookForm({
           maxLength: ISBN_LENGTH,
           required: true,
         })}
-        errorMessage={`Must be a ${ISBN_LENGTH} digits long number`}
+        errorMessage={`ISBN must be a number of ${ISBN_LENGTH} digits`}
       />
       <FormInputDropdown
         control={control}
@@ -167,12 +203,10 @@ export default function AddBookForm({
       />
 
       <Button onClick={handleSubmit(onSubmit)} variant={"contained"}>
-        {" "}
-        Submit{" "}
+        Submit
       </Button>
       <Button onClick={() => reset()} variant={"outlined"}>
-        {" "}
-        Reset{" "}
+        Reset
       </Button>
     </Container>
   )

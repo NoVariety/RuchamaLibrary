@@ -53,7 +53,7 @@ export default function initializeDB(dataSource: DataSource): void {
       // await publisherRepository.save(publisher6)
       //! books
       // const book = new LibBooks()
-      // book.id = 9780345376596
+      // book.id = 9781638584155
       // book.title = "The Tunnel to Summer, the Exit of Goodbyes (Light Novel)"
       // book.coverImage =
       //   "http://books.google.com/books/content?id=tJiQEAAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"

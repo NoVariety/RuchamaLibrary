@@ -39,9 +39,9 @@ export default class LibBooks {
   @Column("integer")
   pageCount: number
 
-  @Column("decimal", { precision: 5, scale: 2 })
+  @Column("decimal", { precision: 5, scale: 2, nullable: true })
   price: number
 
-  @Column("integer")
+  @Column("integer", { nullable: true })
   copies: number
 }

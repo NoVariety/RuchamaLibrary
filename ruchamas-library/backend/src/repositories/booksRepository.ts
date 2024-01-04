@@ -10,4 +10,9 @@ const fetchAllBooks = async () =>
     },
   })
 
-export { fetchAllBooks }
+const checkIfBookExists = async (isbn: number) =>
+  await bookRepository.exist({ where: { id: isbn } })
+
+const saveBookToDB = async (book: LibBooks) => await bookRepository.save(book)
+
+export { fetchAllBooks, checkIfBookExists, saveBookToDB }

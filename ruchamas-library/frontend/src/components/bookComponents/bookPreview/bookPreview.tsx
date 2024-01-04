@@ -9,7 +9,7 @@ import {
   titleSx,
 } from "./bookPreviewStyle"
 
-import { bookInformation, defaultBookInfo } from "../../../data.consts"
+import { BookInformation, defaultBookInfo } from "../../../data.consts"
 
 type bookInfoNameValue = {
   infoName: string
@@ -17,7 +17,7 @@ type bookInfoNameValue = {
 }
 
 type Props = {
-  bookInfo: bookInformation
+  bookInfo: BookInformation
 }
 
 export default function BookPreview({ bookInfo }: Props) {
@@ -36,27 +36,27 @@ export default function BookPreview({ bookInfo }: Props) {
     },
     {
       infoName: "Publication date",
-      infoValue: bookInfo.publicationDate,
+      infoValue: bookInfo.publishDate,
     },
     {
       infoName: "Genre",
-      infoValue: bookInfo.genre,
+      infoValue: bookInfo.category,
     },
     {
       infoName: "Format",
       infoValue:
         bookInfo.author !== defaultBookInfo.author ||
-        bookInfo.publicationDate !== defaultBookInfo.publicationDate
-          ? bookInfo.format
+        bookInfo.publishDate !== defaultBookInfo.publishDate
+          ? bookInfo.coverType
           : "?",
     },
     {
       infoName: "Pages",
-      infoValue: bookInfo.pages !== 0 ? bookInfo.pages : "?",
+      infoValue: bookInfo.pageCount !== 0 ? bookInfo.pageCount : "?",
     },
     {
       infoName: "ISBN",
-      infoValue: bookInfo.ISBN !== 0 ? bookInfo.ISBN : "?",
+      infoValue: bookInfo.id !== 0 ? bookInfo.id : "?",
     },
   ]
 

@@ -15,18 +15,23 @@ type DropdownOptionsType = Array<{
   label: string
 }>
 
-interface bookInformation {
-  summary: string
+interface BookInformation {
+  id: number
   title: string
   coverImage: string
   author: string
-  language: string
+  summary: string
   publisher: Publisher | null
-  publicationDate: string
-  genre: string
-  format: coverTypes
-  pages: number
-  ISBN: number
+  publishDate: string
+  language: string
+  category: string
+  coverType: coverTypes
+  pageCount: number
+}
+
+interface LibBooks extends BookInformation {
+  price: number
+  copies: number
 }
 
 interface FormInputProps {
@@ -45,19 +50,19 @@ interface FormInput {
   printFormat: coverTypes
 }
 
-const defaultBookInfo: bookInformation = {
-  summary: "?",
+const defaultBookInfo: BookInformation = {
+  summary: "no summary available",
   title: "?",
   coverImage:
     "https://cdn.bookauthority.org/dist/images/book-cover-not-available.6b5a104fa66be4eec4fd16aebd34fe04.png",
   author: "?",
   language: "?",
   publisher: null,
-  publicationDate: "?",
-  genre: "?",
-  format: coverTypes.HARDCOVER,
-  pages: 0,
-  ISBN: 0,
+  publishDate: "?",
+  category: "?",
+  coverType: coverTypes.HARDCOVER,
+  pageCount: 0,
+  id: 0,
 }
 
 const ISBN_LENGTH: number = 13
@@ -65,7 +70,8 @@ const ISBN_LENGTH: number = 13
 export {
   coverTypes,
   type Publisher,
-  type bookInformation,
+  type BookInformation,
+  type LibBooks,
   type FormInputProps,
   type FormInput,
   type DropdownOptionsType,

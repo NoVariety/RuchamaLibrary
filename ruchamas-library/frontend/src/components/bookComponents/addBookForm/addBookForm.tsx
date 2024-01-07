@@ -9,9 +9,9 @@ import { FormInputRadio } from "../../formComponents/FormInputRadio"
 import { addBookFormContainerSx } from "./addBookFormStyle"
 import {
   DropdownOptionsType,
-  FormInput,
+  AddBookFormInput,
   ISBN_LENGTH,
-  Publisher,
+  LibPublishers,
   BookInformation,
   defaultBookInfo,
 } from "../../../data.consts"
@@ -27,19 +27,21 @@ import { addNewBookToDB, doesBookExistByISBN } from "../../../APIs/LibBooksAPI"
 import { HttpStatusCode } from "axios"
 
 type Props = {
-  defaultValues: FormInput
+  refreshBooksToDisplay: () => void
+  defaultValues: AddBookFormInput
   setBookData: Dispatch<SetStateAction<BookInformation>>
   bookData: BookInformation
-  allPublishers: MutableRefObject<Publisher[]>
+  allPublishers: MutableRefObject<LibPublishers[]>
 }
 
 export default function AddBookForm({
+  refreshBooksToDisplay,
   defaultValues,
   setBookData,
   bookData,
   allPublishers,
 }: Props) {
-  const methods = useForm<FormInput>({ defaultValues })
+  const methods = useForm<AddBookFormInput>({ defaultValues })
   const {
     control,
     handleSubmit,
@@ -62,38 +64,39 @@ export default function AddBookForm({
 
   const getISBNLength = (): number => watchISBN.toString().length
 
-  function fetchBookData(): void {
-    fetchBooksApi(watchISBN)
-      .then((response) => {
-        let information: BookInformation = defaultBookInfo
+  async function fetchBookData(): Promise<void> {
+    try {
+      let bookInformation: BookInformation = defaultBookInfo
+      const googleBookData = (await fetchBooksApi(watchISBN)).data
 
-        if (getISBNLength() === ISBN_LENGTH && response.data.totalItems > 0) {
-          const data = response.data.items[0].volumeInfo
-          information = {
-            summary: data.description,
-            title: data.title,
-            coverImage: data.imageLinks?.thumbnail,
-            author: data.authors ? data.authors[0] : "?",
-            language: data.language,
-            publisher: bookData.publisher,
-            publishDate: data.publishedDate.split("-").reverse().join("-"),
-            category: data.categories ? data.categories[0] : "?",
-            coverType: bookData.coverType,
-            pageCount: data.pageCount,
-            id: watchISBN,
-          }
+      if (getISBNLength() === ISBN_LENGTH && googleBookData.totalItems > 0) {
+        const volumeData = googleBookData.items[0].volumeInfo
+        bookInformation = {
+          summary: volumeData.description,
+          title: volumeData.title,
+          coverImage: volumeData.imageLinks?.thumbnail,
+          author: volumeData.authors ? volumeData.authors[0] : "?",
+          language: volumeData.language,
+          publisher: bookData.publisher,
+          publishDate: volumeData.publishedDate,
+          category: volumeData.categories ? volumeData.categories[0] : "?",
+          coverType: bookData.coverType,
+          pageCount: volumeData.pageCount,
+          id: watchISBN,
         }
+      }
 
-        setBookData(information)
-      })
-      .catch((error) => console.log("Fetch Books API Error: " + error))
+      setBookData(bookInformation)
+    } catch (error) {
+      console.log("Fetch Books API Error: " + error)
+    }
   }
 
   const watchPrintFormat = watch("printFormat")
   const watchPublisherName = watch("publisherName")
 
   useEffect(() => {
-    const publisher: Publisher | undefined = allPublishers.current.find(
+    const publisher: LibPublishers | undefined = allPublishers.current.find(
       (p) => p.name === watchPublisherName
     )
     setBookData((prev) => ({
@@ -103,8 +106,8 @@ export default function AddBookForm({
     }))
   }, [watchPrintFormat, watchPublisherName])
 
-  const onSubmit = (data: FormInput) => {
-    const publisher: Publisher | undefined = allPublishers.current.find(
+  const onSubmit = (data: AddBookFormInput) => {
+    const publisher: LibPublishers | undefined = allPublishers.current.find(
       (currPublisher) => currPublisher.name === data.publisherName
     )
 
@@ -128,49 +131,54 @@ export default function AddBookForm({
         watchISBN !== defaultBookInfo.id &&
           alert(`No book exists with the ISBN: ${watchISBN}!`) //! change to swal
       } else {
-        addBookToDBIfNew()
+        addNewBook()
       }
       reset()
     }
   }, [formState.isSubmitSuccessful])
 
-  function addBookToDBIfNew(): void {
-    doesBookExistByISBN(bookData.id)
-      .then((response) => {
-        if (response.data) {
-          watchISBN !== defaultBookInfo.id &&
-            alert(`The book: "${bookData.title}" is already in the database!`) //! change to swal
-        } else {
-          //! add book to db here
-          addNewBookToDB({
-            ...bookData,
-            price: 1,
-            copies: 1,
-          })
-            .then((response) => {
-              if (response.status === HttpStatusCode.Ok) {
-                console.log(bookData)
-                watchISBN !== defaultBookInfo.id &&
-                  alert(
-                    `The book: "${bookData.title}" has been added to the database!`
-                  ) //! change to swal
-              } else {
-                alert(
-                  `An error has occured while trying to add: "${bookData.title}" to the database!`
-                ) //! change to swal
-              }
-            })
-            .catch((error) => console.log("Add New Book To DB Error: " + error))
-        }
-      })
-      .catch((error) => console.log("Does Book Exist By ISBN Error: " + error))
+  async function addBookToDB(): Promise<void> {
+    try {
+      const addBookResStatus = (
+        await addNewBookToDB({
+          ...bookData,
+          price: 1,
+          copies: 1,
+        })
+      ).status
+      if (addBookResStatus === HttpStatusCode.Ok) {
+        watchISBN !== defaultBookInfo.id &&
+          alert(`The book: "${bookData.title}" has been added to the database!`) //! change to swal
+        refreshBooksToDisplay()
+      } else {
+        alert(
+          `An error has occured while trying to add: "${bookData.title}" to the database!`
+        ) //! change to swal
+      }
+    } catch (error) {
+      console.log("Add New Book To DB Error: " + error)
+    }
+  }
+
+  async function addNewBook(): Promise<void> {
+    try {
+      const doesBookExist = (await doesBookExistByISBN(bookData.id)).data
+      if (doesBookExist) {
+        watchISBN !== defaultBookInfo.id &&
+          alert(`The book: "${bookData.title}" is already in the database!`) //! change to swal
+      } else {
+        addBookToDB()
+      }
+    } catch (error) {
+      console.log("Does Book Exist By ISBN Error: " + error)
+    }
   }
 
   return (
     <Container sx={addBookFormContainerSx}>
       <FormInputText
         control={control}
-        label={"ISBN"}
+        label="ISBN"
         {...register("ISBN", {
           minLength: ISBN_LENGTH,
           maxLength: ISBN_LENGTH,
@@ -184,6 +192,7 @@ export default function AddBookForm({
         {...register("publisherName", {
           required: true,
         })}
+        errorMessage={`Publisher must be filled!`}
         dropdownOptions={
           allPublishers.current.map((publisher) => ({
             key: publisher.name,

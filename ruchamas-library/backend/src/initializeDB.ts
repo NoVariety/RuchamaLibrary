@@ -70,6 +70,16 @@ export default function initializeDB(dataSource: DataSource): void {
       // book.copies = 3
       // const bookRepository = dataSource.getRepository(LibBooks)
       // await bookRepository.save(book)
+      // // ! readers
+      // const reader = new LibReaders()
+      // reader.id = 123456789
+      // reader.firstName = "Abra"
+      // reader.lastName = "Kadabra"
+      // reader.email = "abrakadabra@magic.wa.nd"
+      // reader.phoneNumber = "0123456789"
+      // reader.joinDate = new Date("1223-12-23")
+      // const readerRepository = dataSource.getRepository(LibReaders)
+      // await readerRepository.save(reader)
     })
     .catch((error) => console.log(error))
 }

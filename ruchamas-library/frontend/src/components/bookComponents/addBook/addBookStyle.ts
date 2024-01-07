@@ -2,6 +2,7 @@ import { SxProps } from "@mui/material"
 
 const mainStackSx: SxProps = {
   justifyContent: "center",
+  padding: "1rem",
 }
 
 const componentTitleSx: SxProps = {

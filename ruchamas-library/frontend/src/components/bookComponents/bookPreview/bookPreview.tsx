@@ -36,7 +36,7 @@ export default function BookPreview({ bookInfo }: Props) {
     },
     {
       infoName: "Publication date",
-      infoValue: bookInfo.publishDate,
+      infoValue: bookInfo.publishDate.split("-").reverse().join("/"),
     },
     {
       infoName: "Genre",

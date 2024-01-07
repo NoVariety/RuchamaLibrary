@@ -3,12 +3,6 @@ enum coverTypes {
   PAPERBACK = "Paperback",
 }
 
-interface Publisher {
-  name: string
-  foundingDate: Date
-  originCountry: string
-}
-
 type DropdownOptionsType = Array<{
   key: string
   value: string
@@ -21,7 +15,7 @@ interface BookInformation {
   coverImage: string
   author: string
   summary: string
-  publisher: Publisher | null
+  publisher: LibPublishers | null
   publishDate: string
   language: string
   category: string
@@ -29,9 +23,33 @@ interface BookInformation {
   pageCount: number
 }
 
+interface LibPublishers {
+  name: string
+  foundingDate: Date
+  originCountry: string
+}
+
 interface LibBooks extends BookInformation {
   price: number
   copies: number
+}
+
+interface LibReaders {
+  id: number
+  firstName: string
+  lastName: string
+  email: string
+  phoneNumber: string
+  joinDate: Date
+}
+
+interface LibReadersTitles {
+  id: string
+  firstName: string
+  lastName: string
+  email: string
+  phoneNumber: string
+  joinDate: string
 }
 
 interface FormInputProps {
@@ -43,11 +61,19 @@ interface FormInputProps {
   dropdownOptions?: DropdownOptionsType
 }
 
-interface FormInput {
+interface AddBookFormInput {
   ISBN: number
   publisherName: string
   pageCount: number
   printFormat: coverTypes
+}
+
+interface AddReaderFormInput {
+  ID: number
+  firstName: string
+  lastName: string
+  email: string
+  phoneNumber: string
 }
 
 const defaultBookInfo: BookInformation = {
@@ -66,15 +92,22 @@ const defaultBookInfo: BookInformation = {
 }
 
 const ISBN_LENGTH: number = 13
+const ID_LENGTH: number = 9
+const PHONE_NUMBER_LENGTH: number = 10
 
 export {
   coverTypes,
-  type Publisher,
-  type BookInformation,
-  type LibBooks,
-  type FormInputProps,
-  type FormInput,
   type DropdownOptionsType,
+  type BookInformation,
+  type LibPublishers,
+  type LibBooks,
+  type LibReaders,
+  type LibReadersTitles,
+  type FormInputProps,
+  type AddBookFormInput,
+  type AddReaderFormInput,
   defaultBookInfo,
   ISBN_LENGTH,
+  ID_LENGTH,
+  PHONE_NUMBER_LENGTH,
 }

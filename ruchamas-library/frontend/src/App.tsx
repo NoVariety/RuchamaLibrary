@@ -19,9 +19,11 @@ import AddBook from "./components/bookComponents/addBook/addBook"
 import ShowBooks from "./components/bookComponents/showBooks/showBooks"
 import NavBar from "./components/navBar/navBar"
 
-import { LibBooks } from "./data.consts"
+import { LibBooks, LibReaders } from "./data.consts"
 import { fetchAllBooks } from "./APIs/LibBooksAPI"
 import AddReader from "./components/readerComponents/addReader/addReader"
+import { fetchAllReaders } from "./APIs/LibReadersAPI"
+import ShowReaders from "./components/readerComponents/showReaders/showReaders"
 
 function App() {
   const [mode, setMode] = React.useState<PaletteMode>("light")
@@ -40,20 +42,32 @@ function App() {
   const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode])
 
   const [books, setBooks] = useState<Array<LibBooks>>()
+  const [readers, setReaders] = useState<Array<LibReaders>>()
 
   const [openAddBook, setOpenAddBook] = useState<boolean>(false)
   const [openAddReader, setOpenAddReader] = useState<boolean>(false)
 
   useEffect(() => {
-    getBooksFromDB()
+    refreshBooksToDisplay()
+    refreshReadersToDisplay()
   }, [])
 
-  function getBooksFromDB(): void {
-    fetchAllBooks()
-      .then((response) => {
-        setBooks(response.data)
-      })
-      .catch((error) => console.log("Failed to fetch books from DB"))
+  async function refreshBooksToDisplay(): Promise<void> {
+    try {
+      const allBooksData = (await fetchAllBooks()).data
+      setBooks(allBooksData)
+    } catch (error) {
+      alert("Failed to fetch books from DB")
+    }
+  }
+
+  async function refreshReadersToDisplay(): Promise<void> {
+    try {
+      const allReadersData = (await fetchAllReaders()).data
+      setReaders(allReadersData)
+    } catch (error) {
+      alert("Failed to fetch books from DB")
+    }
   }
 
   return (
@@ -66,15 +80,22 @@ function App() {
       />
       <Container sx={appContainerSx}>
         <Container sx={propertyContainerSx}>
-          {openAddReader && <AddReader />}
-          {openAddBook && <AddBook />}
+          {openAddReader && (
+            <AddReader refreshReadersToDisplay={refreshReadersToDisplay} />
+          )}
+          {openAddBook && (
+            <AddBook refreshBooksToDisplay={refreshBooksToDisplay} />
+          )}
         </Container>
         <Container sx={propertyContainerSx}>
           {books && <ShowBooks books={books} />}
         </Container>
+        <Container sx={propertyContainerSx}>
+          {readers && <ShowReaders readers={readers} />}
+        </Container>
         <Button
           variant="contained"
-          onClick={getBooksFromDB}
+          onClick={refreshBooksToDisplay}
           sx={refreshButtonSx}
         >
           Refresh Books

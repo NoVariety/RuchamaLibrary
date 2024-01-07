@@ -9,6 +9,7 @@ export const FormInputDropdown: React.FC<FormInputProps> = ({
   control,
   label,
   dropdownOptions,
+  errorMessage,
 }) => {
   const generateSingleOptions = () => {
     return dropdownOptions?.map((option) => {
@@ -26,6 +27,7 @@ export const FormInputDropdown: React.FC<FormInputProps> = ({
         render={({ field: { onChange, value }, fieldState: { error } }) => (
           <TextField
             select
+            helperText={error ? errorMessage : null}
             size="small"
             onChange={onChange}
             value={value}

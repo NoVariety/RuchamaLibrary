@@ -5,7 +5,7 @@ import { useRef, useState } from "react"
 import { mainStackSx, componentTitleSx } from "./addBookStyle"
 
 import {
-  Publisher,
+  LibPublishers,
   BookInformation,
   coverTypes,
   defaultBookInfo,
@@ -15,21 +15,27 @@ import BookPreview from "../bookPreview/bookPreview"
 import AddBookForm from "../addBookForm/addBookForm"
 import { fetchAllPublishers } from "../../../APIs/LibPublishersAPI"
 
-export default function AddBook() {
+type Props = {
+  refreshBooksToDisplay: () => void
+}
+
+export default function AddBook({ refreshBooksToDisplay }: Props) {
   const [bookData, setBookData] = useState<BookInformation>(defaultBookInfo)
 
   const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false)
 
-  const allPublishers = useRef<Publisher[]>([])
+  const allPublishers = useRef<LibPublishers[]>([])
 
-  fetchAllPublishers()
-    .then((response) => {
-      allPublishers.current = response.data
+  async function initializePublisherList(): Promise<void> {
+    try {
+      allPublishers.current = (await fetchAllPublishers()).data
       setIsDataLoaded(true)
-    })
-    .catch((error) => {
-      console.log(error) //! replace with swal or smthing
-    })
+    } catch (error) {
+      console.log("addBook Error: " + error) //! replace with swal or smthing
+    }
+  }
+
+  initializePublisherList()
 
   return (
     <Stack direction="row" spacing={0.2} sx={mainStackSx}>
@@ -43,6 +49,7 @@ export default function AddBook() {
               pageCount: bookData.pageCount,
               printFormat: coverTypes.PAPERBACK,
             }}
+            refreshBooksToDisplay={refreshBooksToDisplay}
             setBookData={setBookData}
             bookData={bookData}
             allPublishers={allPublishers}

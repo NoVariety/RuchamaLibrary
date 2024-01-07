@@ -14,8 +14,8 @@ export default class LibReaders {
   @Column("varchar")
   email: string
 
-  @Column("bigint")
-  phoneNumber: number
+  @Column("varchar")
+  phoneNumber: string
 
   @Column("date")
   joinDate: Date = new Date()

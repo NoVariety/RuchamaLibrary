@@ -2,7 +2,7 @@ import { SxProps } from "@mui/material"
 
 const readerContainerSx: SxProps = {
   backgroundColor: "background.default",
-  width: "65rem",
+  width: "62rem",
 }
 
 const readerInfoTextSx: SxProps = {

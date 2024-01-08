@@ -7,6 +7,7 @@ const getDesignTokens = (mode: PaletteMode) => ({
     ...(mode === "light"
       ? {
           primary: teal,
+          secondary: grey,
           divider: teal[200],
           background: {
             default: "white",

@@ -1,3 +1,8 @@
+enum viewTypes {
+  BOOKS = "books",
+  READERS = "readers",
+}
+
 enum coverTypes {
   HARDCOVER = "Hardcover",
   PAPERBACK = "Paperback",
@@ -96,6 +101,7 @@ const ID_LENGTH: number = 9
 const PHONE_NUMBER_LENGTH: number = 10
 
 export {
+  viewTypes,
   coverTypes,
   type DropdownOptionsType,
   type BookInformation,

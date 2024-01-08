@@ -14,10 +14,10 @@ export default function ShowReaders({ readers }: Props) {
     <Container>
       <ReaderPreview
         reader={{
-          id: "ID",
+          id: "ID Number",
           firstName: "First Name",
           lastName: "Last Name",
-          email: "Email",
+          email: "Email Address",
           phoneNumber: "Phone Number",
           joinDate: "Join Date",
         }}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 
 import {
+  appBackgroundSx,
   appContainerSx,
   getDesignTokens,
   propertyContainerSx,
@@ -74,41 +75,43 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavBar views={views} setViews={setViews} />
-      <Container sx={appContainerSx}>
-        {views === viewTypes.BOOKS && (
-          <Container sx={propertyContainerSx}>
-            {openAddBook && (
-              <AddBook refreshBooksToDisplay={refreshBooksToDisplay} />
-            )}
-            {books && <ShowBooks books={books} />}
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={() => setOpenAddBook((prev) => !prev)}
-              sx={refreshButtonSx}
-            >
-              {`${openAddBook ? "-" : "+"}Add Book`}
-            </Button>
-          </Container>
-        )}
+      <Container sx={appBackgroundSx} disableGutters>
+        <NavBar views={views} setViews={setViews} />
+        <Container sx={appContainerSx}>
+          {views === viewTypes.BOOKS && (
+            <Container sx={propertyContainerSx}>
+              {openAddBook && (
+                <AddBook refreshBooksToDisplay={refreshBooksToDisplay} />
+              )}
+              {books && <ShowBooks books={books} />}
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={() => setOpenAddBook((prev) => !prev)}
+                sx={refreshButtonSx}
+              >
+                {`${openAddBook ? "-" : "+"}Add Book`}
+              </Button>
+            </Container>
+          )}
 
-        {views === viewTypes.READERS && (
-          <Container sx={propertyContainerSx}>
-            {openAddReader && (
-              <AddReader refreshReadersToDisplay={refreshReadersToDisplay} />
-            )}
-            {readers && <ShowReaders readers={readers} />}
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={() => setOpenAddReader((prev) => !prev)}
-              sx={refreshButtonSx}
-            >
-              {`${openAddReader ? "-" : "+"}Add Reader`}
-            </Button>
-          </Container>
-        )}
+          {views === viewTypes.READERS && (
+            <Container sx={propertyContainerSx}>
+              {openAddReader && (
+                <AddReader refreshReadersToDisplay={refreshReadersToDisplay} />
+              )}
+              {readers && <ShowReaders readers={readers} />}
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={() => setOpenAddReader((prev) => !prev)}
+                sx={refreshButtonSx}
+              >
+                {`${openAddReader ? "-" : "+"}Add Reader`}
+              </Button>
+            </Container>
+          )}
+        </Container>
       </Container>
     </ThemeProvider>
   )

@@ -1,3 +1,11 @@
+import {
+  Dispatch,
+  MutableRefObject,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react"
+
 import { Button, Container } from "@mui/material"
 
 import { useForm } from "react-hook-form"
@@ -7,6 +15,7 @@ import { FormInputDropdown } from "../../formComponents/FormInputDropdown"
 import { FormInputRadio } from "../../formComponents/FormInputRadio"
 
 import { addBookFormContainerSx } from "./addBookFormStyle"
+
 import {
   DropdownOptionsType,
   AddBookFormInput,
@@ -15,15 +24,11 @@ import {
   BookInformation,
   defaultBookInfo,
 } from "../../../data.consts"
-import {
-  Dispatch,
-  MutableRefObject,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react"
+
 import { fetchBooksApi } from "../../../APIs/googleBooksAPI"
-import { addNewBookToDB, doesBookExistByISBN } from "../../../APIs/LibBooksAPI"
+
+import { addBookToDB, doesBookExistByISBN } from "../../../APIs/LibBooksAPI"
+
 import { HttpStatusCode } from "axios"
 
 type Props = {
@@ -137,19 +142,19 @@ export default function AddBookForm({
     }
   }, [formState.isSubmitSuccessful])
 
-  async function addBookToDB(): Promise<void> {
+  async function addNewBookToDB(): Promise<void> {
     try {
       const addBookResStatus = (
-        await addNewBookToDB({
+        await addBookToDB({
           ...bookData,
           price: 1,
           copies: 1,
         })
       ).status
       if (addBookResStatus === HttpStatusCode.Ok) {
+        refreshBooksToDisplay()
         watchISBN !== defaultBookInfo.id &&
           alert(`The book: "${bookData.title}" has been added to the database!`) //! change to swal
-        refreshBooksToDisplay()
       } else {
         alert(
           `An error has occured while trying to add: "${bookData.title}" to the database!`
@@ -167,7 +172,7 @@ export default function AddBookForm({
         watchISBN !== defaultBookInfo.id &&
           alert(`The book: "${bookData.title}" is already in the database!`) //! change to swal
       } else {
-        addBookToDB()
+        addNewBookToDB()
       }
     } catch (error) {
       console.log("Does Book Exist By ISBN Error: " + error)

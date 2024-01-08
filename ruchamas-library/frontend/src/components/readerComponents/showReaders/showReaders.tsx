@@ -3,7 +3,7 @@ import { Container, Grid, Stack } from "@mui/material"
 import { LibReaders } from "../../../data.consts"
 import {} from "./showReadersStyle"
 import ReaderPreview from "../readerPreview/readerPreview"
-import { breaklineContainerSx } from "../readerPreview/readerPreviewStyle"
+import { breaklineContainerSx } from "./showReadersStyle"
 
 type Props = {
   readers: Array<LibReaders>
@@ -11,7 +11,7 @@ type Props = {
 
 export default function ShowReaders({ readers }: Props) {
   return (
-    <Container>
+    <Stack direction="column">
       <ReaderPreview
         reader={{
           id: "ID Number",
@@ -27,6 +27,6 @@ export default function ShowReaders({ readers }: Props) {
       {readers.map((reader) => {
         return <ReaderPreview reader={reader} />
       })}
-    </Container>
+    </Stack>
   )
 }

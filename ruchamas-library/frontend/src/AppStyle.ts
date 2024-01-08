@@ -38,12 +38,17 @@ const getDesignTokens = (mode: PaletteMode) => ({
   },
 })
 
+const appBackgroundSx: SxProps = {
+  minHeight: "100%",
+  minWidth: "100%",
+  position: "absolute",
+  zIndex: "-100",
+  backgroundColor: "background.weak",
+}
+
 const appContainerSx: SxProps = {
   minHeight: "100%",
   height: "100%",
-
-  backgroundColor: "background.weak",
-  overflow: "show",
   flexGrow: 1,
 }
 
@@ -60,4 +65,10 @@ const refreshButtonSx: SxProps = {
   zIndex: "100",
 }
 
-export { getDesignTokens, appContainerSx, propertyContainerSx, refreshButtonSx }
+export {
+  getDesignTokens,
+  appBackgroundSx,
+  appContainerSx,
+  propertyContainerSx,
+  refreshButtonSx,
+}

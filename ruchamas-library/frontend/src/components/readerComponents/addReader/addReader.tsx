@@ -8,7 +8,6 @@ import {
   LibPublishers,
   BookInformation,
   defaultBookInfo,
-  AddReaderFormInput,
 } from "../../../data.consts"
 
 import AddReaderForm from "../addReaderForm/addReaderForm"

@@ -9,7 +9,7 @@ const fetchAllReaders = async () => await axios.get(`${readersRequestUrl}/`)
 const doesReaderExistByID = async (id: number) =>
   await axios.get(`${readersRequestUrl}/${id}`)
 
-const addNewReaderToDB = async (reader: LibReaders) =>
+const addReaderToDB = async (reader: LibReaders) =>
   await axios.post(`${readersRequestUrl}/`, reader)
 
-export { fetchAllReaders, doesReaderExistByID, addNewReaderToDB }
+export { fetchAllReaders, doesReaderExistByID, addReaderToDB }

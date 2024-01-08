@@ -1,7 +1,6 @@
 import { SxProps } from "@mui/material"
 
 const marginContainerSx: SxProps = {
-  // transform: "scale(0.75)",
   width: "20em",
   height: "100%",
   backgroundColor: "background.default",

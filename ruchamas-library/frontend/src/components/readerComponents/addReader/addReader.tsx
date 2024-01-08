@@ -29,7 +29,7 @@ export default function AddReader({ refreshReadersToDisplay }: Props) {
       allPublishers.current = (await fetchAllPublishers()).data
       setIsDataLoaded(true)
     } catch (error) {
-      console.log("addBook Error: " + error) //! replace with swal or smthing
+      console.log("addBook Error: " + error)
     }
   }
 

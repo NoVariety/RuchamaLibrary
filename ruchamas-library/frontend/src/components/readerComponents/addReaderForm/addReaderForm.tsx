@@ -74,7 +74,7 @@ export default function AddReaderForm({
         {...register("ID", {
           minLength: ID_LENGTH,
           maxLength: ID_LENGTH,
-          required: true, //! if i have time add validation like a real id has
+          required: true,
         })}
         errorMessage={`ID must be a number of ${ID_LENGTH} digits`}
       />

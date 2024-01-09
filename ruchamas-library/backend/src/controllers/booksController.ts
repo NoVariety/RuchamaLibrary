@@ -5,7 +5,6 @@ import {
   addBookToDB,
 } from "../services/booksService"
 
-//! add middleware instead of try catch
 const requestAllBooks = async (req: Request, res: Response) => {
   try {
     res.send(await getAllBooks())

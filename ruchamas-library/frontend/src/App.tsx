@@ -30,7 +30,6 @@ function App() {
   const [mode, setMode] = React.useState<PaletteMode>("light")
   const colorMode = React.useMemo(
     () => ({
-      // The dark mode switch would invoke this method
       toggleColorMode: () => {
         setMode((prevMode: PaletteMode) =>
           prevMode === "light" ? "dark" : "light"
@@ -39,7 +38,6 @@ function App() {
     }),
     []
   )
-  // Update the theme only if the mode changes
   const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode])
 
   const [books, setBooks] = useState<Array<LibBooks>>()

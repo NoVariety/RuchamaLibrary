@@ -78,8 +78,30 @@ export default function initializeDB(dataSource: DataSource): void {
       // reader.email = "abrakadabra@magic.wa.nd"
       // reader.phoneNumber = "0123456789"
       // reader.joinDate = new Date("1223-12-23")
+      // const reader2 = new LibReaders()
+      // reader2.id = 987654321
+      // reader2.firstName = "Adon"
+      // reader2.lastName = "Baron"
+      // reader2.email = "viscount@earl.du.ke"
+      // reader2.phoneNumber = "0987654321"
+      // reader2.joinDate = new Date("1720-10-01")
       // const readerRepository = dataSource.getRepository(LibReaders)
       // await readerRepository.save(reader)
+      // await readerRepository.save(reader2)
+      // // ! borrows
+      // const borrow = new LibBorrows()
+      // borrow.book = book
+      // borrow.reader = reader
+      // borrow.borrowDate = new Date("1999-01-01")
+      // borrow.returnDate = new Date()
+      // const borrow2 = new LibBorrows()
+      // borrow2.book = book
+      // borrow2.reader = reader2
+      // borrow2.borrowDate = new Date("2022-11-29")
+      // borrow2.returnDate = new Date("2023-11-29")
+      // const borrowRepository = dataSource.getRepository(LibBorrows)
+      // await borrowRepository.save(borrow)
+      // await borrowRepository.save(borrow2)
     })
     .catch((error) => console.log(error))
 }

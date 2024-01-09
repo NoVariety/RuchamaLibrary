@@ -5,7 +5,6 @@ import {
   addReaderToDB,
 } from "../services/readersService"
 
-//! add middleware instead of try catch
 const requestAllReaders = async (req: Request, res: Response) => {
   try {
     res.send(await getAllReaders())

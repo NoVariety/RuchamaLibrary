@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany, PrimaryColumn } from "typeorm"
+import { Entity, Column, OneToMany, PrimaryColumn, JoinColumn } from "typeorm"
 import LibBooks from "./libBooks"
 
 @Entity()
@@ -13,5 +13,6 @@ export default class LibPublishers {
   originCountry: String
 
   @OneToMany((type) => LibBooks, (book) => book.author)
+  @JoinColumn()
   books: LibBooks[]
 }

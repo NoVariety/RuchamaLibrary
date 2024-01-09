@@ -4,6 +4,8 @@ import {
   PrimaryGeneratedColumn,
   OneToOne,
   JoinColumn,
+  ManyToOne,
+  OneToMany,
 } from "typeorm"
 
 import LibReaders from "./libReaders"
@@ -14,11 +16,11 @@ export default class LibBorrows {
   @PrimaryGeneratedColumn()
   id: number
 
-  @OneToOne((type) => LibBooks)
+  @ManyToOne((type) => LibBooks)
   @JoinColumn()
   book: LibBooks
 
-  @OneToOne((type) => LibReaders)
+  @ManyToOne((type) => LibReaders)
   @JoinColumn()
   reader: LibReaders
 

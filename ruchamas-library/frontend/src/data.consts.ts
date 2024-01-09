@@ -9,8 +9,8 @@ enum coverTypes {
 }
 
 type DropdownOptionsType = Array<{
-  key: string
-  value: string
+  key: any
+  value: any
   label: string
 }>
 
@@ -45,7 +45,7 @@ interface LibReaders {
   lastName: string
   email: string
   phoneNumber: string
-  joinDate: Date
+  joinDate: Date | null
 }
 
 interface LibReadersTitles {
@@ -55,6 +55,13 @@ interface LibReadersTitles {
   email: string
   phoneNumber: string
   joinDate: string
+}
+
+interface LibBorrows {
+  book: LibBooks
+  reader: LibReaders | null
+  borrowDate: Date
+  returnDate: Date | null
 }
 
 interface FormInputProps {
@@ -81,6 +88,10 @@ interface AddReaderFormInput {
   phoneNumber: string
 }
 
+interface ChooseReaderFormInput {
+  reader: LibReaders
+}
+
 const defaultBookInfo: BookInformation = {
   summary: "no summary available",
   title: "?",
@@ -96,6 +107,15 @@ const defaultBookInfo: BookInformation = {
   id: 0,
 }
 
+const defaultReaderInfo: LibReaders = {
+  id: 0,
+  firstName: "",
+  lastName: "",
+  email: "",
+  phoneNumber: "",
+  joinDate: null,
+}
+
 const ISBN_LENGTH: number = 13
 const ID_LENGTH: number = 9
 const PHONE_NUMBER_LENGTH: number = 10
@@ -109,10 +129,13 @@ export {
   type LibBooks,
   type LibReaders,
   type LibReadersTitles,
+  type LibBorrows,
   type FormInputProps,
   type AddBookFormInput,
   type AddReaderFormInput,
+  type ChooseReaderFormInput,
   defaultBookInfo,
+  defaultReaderInfo,
   ISBN_LENGTH,
   ID_LENGTH,
   PHONE_NUMBER_LENGTH,

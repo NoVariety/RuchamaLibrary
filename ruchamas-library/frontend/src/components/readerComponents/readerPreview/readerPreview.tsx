@@ -16,7 +16,7 @@ export default function ReaderPreview({ reader }: Props) {
       <Container sx={readerInfoTextSx}>{reader.email}</Container>
       <Container sx={readerInfoTextSx}>{reader.phoneNumber}</Container>
       <Container sx={readerInfoTextSx}>
-        {reader.joinDate.toLocaleString().split("-").reverse().join("/")}
+        {reader.joinDate?.toLocaleString().split("-").reverse().join("/")}
       </Container>
     </Stack>
   )

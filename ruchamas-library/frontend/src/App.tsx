@@ -81,7 +81,9 @@ function App() {
               {openAddBook && (
                 <AddBook refreshBooksToDisplay={refreshBooksToDisplay} />
               )}
-              {books && <ShowBooks books={books} />}
+              {books && readers && (
+                <ShowBooks books={books} readers={readers} />
+              )}
               <Button
                 color="primary"
                 variant="contained"

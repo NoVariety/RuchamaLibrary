@@ -2,10 +2,8 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToOne,
   JoinColumn,
   ManyToOne,
-  OneToMany,
 } from "typeorm"
 
 import LibReaders from "./libReaders"

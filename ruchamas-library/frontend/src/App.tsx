@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 
 import {
+  addBookButtonSx,
   addButtonSx,
   appBackgroundSx,
   appContainerSx,
@@ -92,7 +93,7 @@ function App() {
                 color="primary"
                 variant="contained"
                 onClick={() => setOpenAddBook((prev) => !prev)}
-                sx={addButtonSx}
+                sx={addBookButtonSx}
               >
                 {`${openAddBook ? "-" : "+"}Add Book`}
               </Button>

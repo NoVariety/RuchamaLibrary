@@ -65,10 +65,16 @@ const addButtonSx: SxProps = {
   zIndex: "100",
 }
 
+const addBookButtonSx: SxProps = {
+  ...addButtonSx,
+  width: "7.4rem",
+}
+
 export {
   getDesignTokens,
   appBackgroundSx,
   appContainerSx,
   propertyContainerSx,
   addButtonSx,
+  addBookButtonSx,
 }

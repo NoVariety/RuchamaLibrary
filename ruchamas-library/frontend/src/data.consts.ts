@@ -1,11 +1,12 @@
 enum viewTypes {
-  BOOKS = "books",
-  READERS = "readers",
+  NONE,
+  BOOKS,
+  READERS,
 }
 
 enum borrowViewTypes {
-  BORROW = "borrow",
-  RETURN = "return",
+  BORROW,
+  RETURN,
 }
 
 enum coverTypes {
@@ -95,11 +96,11 @@ interface AddReaderFormInput {
 }
 
 interface ChooseReaderFormInput {
-  readerID: number
+  readerID: number | string
 }
 
 interface ChooseBorrowFormInput {
-  borrowID: number
+  borrowID: number | string
 }
 
 const defaultBookInfo: BookInformation = {

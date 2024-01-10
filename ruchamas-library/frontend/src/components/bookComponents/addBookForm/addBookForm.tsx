@@ -142,13 +142,13 @@ export default function AddBookForm({
         await addBookToDB({
           ...bookData,
           price: 1,
-          copies: 5,
+          copies: 3,
         })
       ).status
       if (addBookResStatus === HttpStatusCode.Ok) {
-        refreshBooksToDisplay()
         watchISBN !== defaultBookInfo.id &&
           alert(`The book: "${bookData.title}" has been added to the database!`)
+        refreshBooksToDisplay()
       } else {
         alert(
           `An error has occured while trying to add: "${bookData.title}" to the database!`

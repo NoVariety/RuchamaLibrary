@@ -48,9 +48,15 @@ function App() {
   const [openAddBook, setOpenAddBook] = useState<boolean>(false)
   const [openAddReader, setOpenAddReader] = useState<boolean>(false)
 
+  const [initialLoad, setInitialLoad] = useState<boolean>(false)
+
   useEffect(() => {
-    refreshBooksToDisplay()
-    refreshReadersToDisplay()
+    if (initialLoad) {
+      setInitialLoad(true)
+    } else {
+      refreshBooksToDisplay()
+      refreshReadersToDisplay()
+    }
   }, [])
 
   async function refreshBooksToDisplay(): Promise<void> {
@@ -76,14 +82,12 @@ function App() {
       <Container sx={appBackgroundSx} disableGutters>
         <NavBar views={views} setViews={setViews} />
         <Container sx={appContainerSx}>
-          {views === viewTypes.BOOKS && (
+          {views === viewTypes.BOOKS && books && (
             <Container sx={propertyContainerSx}>
               {openAddBook && (
                 <AddBook refreshBooksToDisplay={refreshBooksToDisplay} />
               )}
-              {books && readers && (
-                <ShowBooks books={books} readers={readers} />
-              )}
+              {readers && <ShowBooks books={books} readers={readers} />}
               <Button
                 color="primary"
                 variant="contained"

@@ -31,7 +31,7 @@ type Props = {
 
 export default function BookReturn({ book }: Props) {
   const methods = useForm<ChooseBorrowFormInput>({
-    defaultValues: {},
+    defaultValues: { borrowID: "" },
   })
   const { control, handleSubmit, register } = methods
 
@@ -47,7 +47,7 @@ export default function BookReturn({ book }: Props) {
   }, [])
 
   async function handleReturn(data: ChooseBorrowFormInput): Promise<void> {
-    await returnBookByBorrowID(data.borrowID)
+    await returnBookByBorrowID(+data.borrowID)
 
     console.log(data.borrowID)
     updateBorrows()

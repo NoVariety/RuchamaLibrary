@@ -31,7 +31,7 @@ type Props = {
 
 export default function BookBorrow({ book, readers }: Props) {
   const methods = useForm<ChooseReaderFormInput>({
-    defaultValues: {},
+    defaultValues: { readerID: "" },
   })
   const { control, handleSubmit, register } = methods
 

@@ -61,7 +61,7 @@ export default function BookBorrow({ book, readers }: Props) {
     }
   }
 
-  const [bookCopies, setBookCopies] = useState<number>(book.copies)
+  const [bookCopies, setBookCopies] = useState<number>()
 
   async function updateBookCopies(): Promise<void> {
     const resBookCopies: number = (await getBookCopiesByISBN(book.id)).data
@@ -77,24 +77,26 @@ export default function BookBorrow({ book, readers }: Props) {
       <Stack direction="column">
         <Stack direction="row">
           <Container sx={infoNameSx}>Available Copies</Container>
-          <Container sx={infoValueSx}>{bookCopies}</Container>
-          <Button
-            variant="contained"
-            onClick={handleSubmit(handleBorrow)}
-            disabled={bookCopies < 1}
-            sx={buttonSx}
-          >
-            Borrow
-          </Button>
+          {bookCopies && <Container sx={infoValueSx}>{bookCopies}</Container>}
+          {bookCopies && (
+            <Button
+              variant="contained"
+              onClick={handleSubmit(handleBorrow)}
+              disabled={bookCopies < 1}
+              sx={buttonSx}
+            >
+              Borrow
+            </Button>
+          )}
         </Stack>
-        {bookCopies > 0 && (
+        {bookCopies && bookCopies > 0 && (
           <FormInputDropdown
             control={control}
             label="reader"
             {...register("readerID", {
               required: true,
             })}
-            errorMessage={"Reader must be filled to borrow!"}
+            errorMessage={"Reader must be filled to borrow the book!"}
             dropdownOptions={
               readers.map((reader) => ({
                 key: reader.id,

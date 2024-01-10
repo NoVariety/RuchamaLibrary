@@ -30,6 +30,7 @@ import { fetchBooksApi } from "../../../APIs/googleBooksAPI"
 import { addBookToDB, doesBookExistByISBN } from "../../../APIs/LibBooksAPI"
 
 import { HttpStatusCode } from "axios"
+import { getRandomPrice } from "../../../utils/appUtils"
 
 type Props = {
   refreshBooksToDisplay: () => void
@@ -120,29 +121,22 @@ export default function AddBookForm({
   const doesBookExist = (): boolean => bookData.id !== defaultBookInfo.id
 
   const onSubmit = (data: AddBookFormInput) => {
-    if (!didInitialLoadHappen) {
-      setDidInitialLoadHappen(true)
+    if (!doesBookExist()) {
+      watchISBN !== defaultBookInfo.id &&
+        alert(`No book exists with the ISBN: ${watchISBN}!`)
     } else {
-      if (!doesBookExist()) {
-        watchISBN !== defaultBookInfo.id &&
-          alert(`No book exists with the ISBN: ${watchISBN}!`)
-      } else {
-        addNewBook()
-      }
-      reset()
+      addNewBook(data.copies)
     }
+    reset()
   }
 
-  const [didInitialLoadHappen, setDidInitialLoadHappen] =
-    useState<boolean>(false)
-
-  async function addNewBookToDB(): Promise<void> {
+  async function addNewBookToDB(copies: number): Promise<void> {
     try {
       const addBookResStatus = (
         await addBookToDB({
           ...bookData,
-          price: 1,
-          copies: 3,
+          copies: copies,
+          price: getRandomPrice(),
         })
       ).status
       if (addBookResStatus === HttpStatusCode.Ok) {
@@ -159,14 +153,14 @@ export default function AddBookForm({
     }
   }
 
-  async function addNewBook(): Promise<void> {
+  async function addNewBook(copies: number): Promise<void> {
     try {
       const doesBookExist = (await doesBookExistByISBN(bookData.id)).data
       if (doesBookExist) {
         watchISBN !== defaultBookInfo.id &&
           alert(`The book: "${bookData.title}" is already in the database!`)
       } else {
-        addNewBookToDB()
+        addNewBookToDB(copies)
       }
     } catch (error) {
       console.log("Does Book Exist By ISBN Error: " + error)
@@ -216,6 +210,15 @@ export default function AddBookForm({
         {...register("printFormat", {
           required: true,
         })}
+      />
+      <FormInputText
+        control={control}
+        label="Copies"
+        {...register("copies", {
+          pattern: /^\d+$/,
+          required: true,
+        })}
+        errorMessage={`Copies must be a number!`}
       />
 
       <Button onClick={handleSubmit(onSubmit)} variant={"contained"}>

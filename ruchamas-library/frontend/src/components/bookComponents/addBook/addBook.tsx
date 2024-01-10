@@ -48,6 +48,7 @@ export default function AddBook({ refreshBooksToDisplay }: Props) {
               publisherName: "",
               pageCount: bookData.pageCount,
               printFormat: coverTypes.PAPERBACK,
+              copies: 1,
             }}
             refreshBooksToDisplay={refreshBooksToDisplay}
             setBookData={setBookData}

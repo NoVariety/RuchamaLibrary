@@ -33,7 +33,7 @@ export default function BookReturn({ book }: Props) {
   const methods = useForm<ChooseBorrowFormInput>({
     defaultValues: { borrowID: "" },
   })
-  const { control, handleSubmit, register } = methods
+  const { control, handleSubmit, register, reset } = methods
 
   const [borrows, setBorrows] = useState<Array<LibBorrows>>()
 
@@ -49,8 +49,8 @@ export default function BookReturn({ book }: Props) {
   async function handleReturn(data: ChooseBorrowFormInput): Promise<void> {
     await returnBookByBorrowID(+data.borrowID)
 
-    console.log(data.borrowID)
     updateBorrows()
+    reset()
   }
 
   const [bookBorrows, setBookBorrows] = useState<number>()
@@ -89,7 +89,7 @@ export default function BookReturn({ book }: Props) {
             {...register("borrowID", {
               required: true,
             })}
-            errorMessage={"Reader must be filled to borrow!"}
+            errorMessage={"Borrow must be filled to return the book!"}
             dropdownOptions={
               borrows.map((borrow) => ({
                 key: borrow.id,

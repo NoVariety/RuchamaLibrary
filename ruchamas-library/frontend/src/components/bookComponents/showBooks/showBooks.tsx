@@ -15,17 +15,13 @@ type Props = {
 }
 
 export default function ShowBooks({ books, readers }: Props) {
-  const booksSortedByTitle: LibBooks[] = books.sort((a, b) => {
-    return ("" + a.title).localeCompare(b.title)
-  })
-
   const [borrowViews, setBorrowViews] = useState<borrowViewTypes>(
     borrowViewTypes.BORROW
   )
 
   return (
     <Grid container spacing={3}>
-      {booksSortedByTitle.map((book) => {
+      {books.map((book) => {
         return (
           <Grid item xs={4}>
             <Stack direction="column">

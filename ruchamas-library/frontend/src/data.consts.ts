@@ -85,6 +85,7 @@ interface AddBookFormInput {
   publisherName: string
   pageCount: number
   printFormat: coverTypes
+  copies: number
 }
 
 interface AddReaderFormInput {

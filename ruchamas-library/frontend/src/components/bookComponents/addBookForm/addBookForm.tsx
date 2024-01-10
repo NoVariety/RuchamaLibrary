@@ -142,7 +142,7 @@ export default function AddBookForm({
         await addBookToDB({
           ...bookData,
           price: 1,
-          copies: 1,
+          copies: 5,
         })
       ).status
       if (addBookResStatus === HttpStatusCode.Ok) {
@@ -181,6 +181,7 @@ export default function AddBookForm({
         {...register("ISBN", {
           minLength: ISBN_LENGTH,
           maxLength: ISBN_LENGTH,
+          pattern: /^\d+$/,
           required: true,
         })}
         errorMessage={`ISBN must be a number of ${ISBN_LENGTH} digits`}
@@ -204,8 +205,10 @@ export default function AddBookForm({
         control={control}
         label="Page Count"
         {...register("pageCount", {
+          pattern: /^\d+$/,
           required: true,
         })}
+        errorMessage={`Page count must be a number!`}
       />
       <FormInputRadio
         control={control}

@@ -58,7 +58,7 @@ const propertyContainerSx: SxProps = {
   margin: "2rem",
 }
 
-const refreshButtonSx: SxProps = {
+const addButtonSx: SxProps = {
   position: "fixed",
   bottom: "0.5rem",
   right: "0.5rem",
@@ -70,5 +70,5 @@ export {
   appBackgroundSx,
   appContainerSx,
   propertyContainerSx,
-  refreshButtonSx,
+  addButtonSx,
 }

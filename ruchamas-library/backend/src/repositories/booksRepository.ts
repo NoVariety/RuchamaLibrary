@@ -15,4 +15,30 @@ const checkIfBookExists = async (isbn: number) =>
 
 const saveBookToDB = async (book: LibBooks) => await bookRepository.save(book)
 
-export { fetchAllBooks, checkIfBookExists, saveBookToDB }
+const borrowBookByISBN = async (isbn: number) => {
+  const bookToUpdate = await bookRepository.findOne({ where: { id: isbn } })
+  await bookRepository.save({
+    ...bookToUpdate,
+    copies: bookToUpdate.copies - 1,
+  })
+}
+
+const returnBookByISBN = async (isbn: number) => {
+  const bookToUpdate = await bookRepository.findOne({ where: { id: isbn } })
+  await bookRepository.save({
+    ...bookToUpdate,
+    copies: bookToUpdate.copies + 1,
+  })
+}
+
+const getBookByISBN = async (isbn: number) =>
+  await bookRepository.findOne({ where: { id: isbn } })
+
+export {
+  fetchAllBooks,
+  checkIfBookExists,
+  saveBookToDB,
+  borrowBookByISBN,
+  returnBookByISBN,
+  getBookByISBN,
+}

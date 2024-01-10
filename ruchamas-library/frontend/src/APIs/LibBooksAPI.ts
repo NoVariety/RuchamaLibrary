@@ -12,4 +12,7 @@ const doesBookExistByISBN = async (isbn: number) =>
 const addBookToDB = async (book: LibBooks) =>
   await axios.post(`${booksRequestUrl}/`, book)
 
-export { fetchAllBooks, doesBookExistByISBN, addBookToDB }
+const getBookCopiesByISBN = async (isbn: number) =>
+  await axios.get(`${booksRequestUrl}/copies/${isbn}`)
+
+export { fetchAllBooks, doesBookExistByISBN, addBookToDB, getBookCopiesByISBN }

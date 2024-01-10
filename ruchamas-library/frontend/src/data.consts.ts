@@ -3,6 +3,11 @@ enum viewTypes {
   READERS = "readers",
 }
 
+enum borrowViewTypes {
+  BORROW = "borrow",
+  RETURN = "return",
+}
+
 enum coverTypes {
   HARDCOVER = "Hardcover",
   PAPERBACK = "Paperback",
@@ -58,8 +63,9 @@ interface LibReadersTitles {
 }
 
 interface LibBorrows {
+  id?: number
   book: LibBooks
-  reader: LibReaders | null
+  reader: LibReaders | null | undefined
   borrowDate: Date
   returnDate: Date | null
 }
@@ -89,7 +95,11 @@ interface AddReaderFormInput {
 }
 
 interface ChooseReaderFormInput {
-  reader: LibReaders
+  readerID: number
+}
+
+interface ChooseBorrowFormInput {
+  borrowID: number
 }
 
 const defaultBookInfo: BookInformation = {
@@ -107,21 +117,13 @@ const defaultBookInfo: BookInformation = {
   id: 0,
 }
 
-const defaultReaderInfo: LibReaders = {
-  id: 0,
-  firstName: "",
-  lastName: "",
-  email: "",
-  phoneNumber: "",
-  joinDate: null,
-}
-
 const ISBN_LENGTH: number = 13
 const ID_LENGTH: number = 9
 const PHONE_NUMBER_LENGTH: number = 10
 
 export {
   viewTypes,
+  borrowViewTypes,
   coverTypes,
   type DropdownOptionsType,
   type BookInformation,
@@ -134,8 +136,8 @@ export {
   type AddBookFormInput,
   type AddReaderFormInput,
   type ChooseReaderFormInput,
+  type ChooseBorrowFormInput,
   defaultBookInfo,
-  defaultReaderInfo,
   ISBN_LENGTH,
   ID_LENGTH,
   PHONE_NUMBER_LENGTH,

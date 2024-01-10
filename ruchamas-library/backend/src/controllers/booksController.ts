@@ -3,6 +3,7 @@ import {
   getAllBooks,
   findIfBookExists,
   addBookToDB,
+  getBookCopiesByISBN,
 } from "../services/booksService"
 
 const requestAllBooks = async (req: Request, res: Response) => {
@@ -29,4 +30,17 @@ const sendAddBookToDB = async (req: Request, res: Response) => {
   }
 }
 
-export { requestAllBooks, requestFindIfBookExists, sendAddBookToDB }
+const requestBookCopiesByISBN = async (req: Request, res: Response) => {
+  try {
+    res.json(await getBookCopiesByISBN(req.params["isbn"]))
+  } catch (error) {
+    res.send(error)
+  }
+}
+
+export {
+  requestAllBooks,
+  requestFindIfBookExists,
+  sendAddBookToDB,
+  requestBookCopiesByISBN,
+}

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react"
 
 import {
+  addButtonSx,
   appBackgroundSx,
   appContainerSx,
   getDesignTokens,
   propertyContainerSx,
-  refreshButtonSx,
 } from "./AppStyle"
 
 import {
@@ -88,7 +88,7 @@ function App() {
                 color="primary"
                 variant="contained"
                 onClick={() => setOpenAddBook((prev) => !prev)}
-                sx={refreshButtonSx}
+                sx={addButtonSx}
               >
                 {`${openAddBook ? "-" : "+"}Add Book`}
               </Button>
@@ -105,7 +105,7 @@ function App() {
                 color="primary"
                 variant="contained"
                 onClick={() => setOpenAddReader((prev) => !prev)}
-                sx={refreshButtonSx}
+                sx={addButtonSx}
               >
                 {`${openAddReader ? "-" : "+"}Add Reader`}
               </Button>

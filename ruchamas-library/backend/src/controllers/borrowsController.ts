@@ -1,14 +1,32 @@
 import { Request, Response } from "express"
 import {
   getAllBorrows,
+  getAllBorrowsByBookID,
+  getBorrowsAmountByBookID,
   findBorrowByID,
   insertBorrowToDB,
-  deleteBorrowByID,
+  returnBookBorrowByID,
 } from "../services/borrowsService"
 
 const requestAllBorrows = async (req: Request, res: Response) => {
   try {
     res.send(await getAllBorrows())
+  } catch (error) {
+    res.send(error)
+  }
+}
+
+const requestAllBorrowsByBookID = async (req: Request, res: Response) => {
+  try {
+    res.send(await getAllBorrowsByBookID(req.params["id"]))
+  } catch (error) {
+    res.send(error)
+  }
+}
+
+const requestCountBorrowsByBookID = async (req: Request, res: Response) => {
+  try {
+    res.json(await getBorrowsAmountByBookID(req.params["id"]))
   } catch (error) {
     res.send(error)
   }
@@ -30,9 +48,9 @@ const sendAddBorrowToDB = async (req: Request, res: Response) => {
   }
 }
 
-const requestRemoveBorrowByID = async (req: Request, res: Response) => {
+const requestReturnBookByID = async (req: Request, res: Response) => {
   try {
-    res.send(await deleteBorrowByID(req.params["id"]))
+    res.send(await returnBookBorrowByID(req.params["id"]))
   } catch (error) {
     res.send(error)
   }
@@ -40,7 +58,9 @@ const requestRemoveBorrowByID = async (req: Request, res: Response) => {
 
 export {
   requestAllBorrows,
+  requestAllBorrowsByBookID,
+  requestCountBorrowsByBookID,
   requestFindBorrowByID,
   sendAddBorrowToDB,
-  requestRemoveBorrowByID,
+  requestReturnBookByID,
 }

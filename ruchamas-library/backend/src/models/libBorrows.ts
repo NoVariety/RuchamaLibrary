@@ -25,6 +25,6 @@ export default class LibBorrows {
   @Column("date")
   borrowDate: Date = new Date()
 
-  @Column("date")
+  @Column("date", { nullable: true })
   returnDate: Date
 }

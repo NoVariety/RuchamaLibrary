@@ -1,17 +1,33 @@
 import LibBorrows from "../models/libBorrows"
 import {
   fetchAllBorrows,
+  fetchAllBorrowsByBookID,
+  fetchBorrowCountByBookID,
   fetchBorrowsByID,
   addBorrowToDB,
-  removeBorrowByID,
+  returnBookByID,
 } from "../repositories/borrowsRepository"
 
 const getAllBorrows = async () => await fetchAllBorrows()
 
+const getAllBorrowsByBookID = async (bookID: number) =>
+  await fetchAllBorrowsByBookID(bookID)
+
+const getBorrowsAmountByBookID = async (bookID: number) =>
+  await fetchBorrowCountByBookID(bookID)
+
 const findBorrowByID = async (id: number) => await fetchBorrowsByID(id)
 
-const insertBorrowToDB = async (book: LibBorrows) => await addBorrowToDB(book)
+const insertBorrowToDB = async (borrow: LibBorrows) =>
+  await addBorrowToDB(borrow)
 
-const deleteBorrowByID = async (id: number) => await removeBorrowByID(id)
+const returnBookBorrowByID = async (id: number) => await returnBookByID(id)
 
-export { getAllBorrows, findBorrowByID, insertBorrowToDB, deleteBorrowByID }
+export {
+  getAllBorrows,
+  getAllBorrowsByBookID,
+  getBorrowsAmountByBookID,
+  findBorrowByID,
+  insertBorrowToDB,
+  returnBookBorrowByID,
+}

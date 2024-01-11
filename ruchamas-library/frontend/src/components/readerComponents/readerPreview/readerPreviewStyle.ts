@@ -8,4 +8,13 @@ const readerInfoTextSx: SxProps = {
   textAlign: "center",
 }
 
-export { readerInfoTextSx }
+function getReaderInfoTextSx(isTitle: boolean): SxProps {
+  return {
+    ...readerInfoTextSx,
+    ...(isTitle && {
+      fontWeight: "bold",
+    }),
+  }
+}
+
+export { getReaderInfoTextSx }

@@ -1,8 +1,9 @@
 import LibBorrows from "../models/libBorrows"
 import {
   fetchAllBorrows,
-  fetchAllBorrowsByBookID,
-  fetchBorrowCountByBookID,
+  fetchUnreturnedBorrowsBeforeDate,
+  fetchUnreturnedBorrowsByBookID,
+  countUnreturnedBorrowByBookID,
   fetchBorrowsByID,
   addBorrowToDB,
   returnBookByID,
@@ -10,11 +11,14 @@ import {
 
 const getAllBorrows = async () => await fetchAllBorrows()
 
-const getAllBorrowsByBookID = async (bookID: number) =>
-  await fetchAllBorrowsByBookID(bookID)
+const getUnreturnedBorrowsBeforeDate = async (date: Date) =>
+  await fetchUnreturnedBorrowsBeforeDate(date)
 
-const getBorrowsAmountByBookID = async (bookID: number) =>
-  await fetchBorrowCountByBookID(bookID)
+const getUnreturnedBorrowsByBookID = async (bookID: number) =>
+  await fetchUnreturnedBorrowsByBookID(bookID)
+
+const getUnreturnedBorrowsAmountByBookID = async (bookID: number) =>
+  await countUnreturnedBorrowByBookID(bookID)
 
 const findBorrowByID = async (id: number) => await fetchBorrowsByID(id)
 
@@ -25,8 +29,9 @@ const returnBookBorrowByID = async (id: number) => await returnBookByID(id)
 
 export {
   getAllBorrows,
-  getAllBorrowsByBookID,
-  getBorrowsAmountByBookID,
+  getUnreturnedBorrowsBeforeDate,
+  getUnreturnedBorrowsByBookID,
+  getUnreturnedBorrowsAmountByBookID,
   findBorrowByID,
   insertBorrowToDB,
   returnBookBorrowByID,

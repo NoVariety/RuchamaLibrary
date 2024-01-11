@@ -1,4 +1,4 @@
-import { IsNull, Not } from "typeorm"
+import { IsNull, LessThan, Not } from "typeorm"
 import { AppDataSource } from "../dataSource"
 import LibBorrows from "../models/libBorrows"
 
@@ -9,13 +9,19 @@ const borrowsRepository = AppDataSource.getRepository(LibBorrows)
 const fetchAllBorrows = async () =>
   await borrowsRepository.find({ relations: { book: true, reader: true } })
 
-const fetchAllBorrowsByBookID = async (bookID: number) =>
+const fetchUnreturnedBorrowsBeforeDate = async (date: Date) =>
+  await borrowsRepository.find({
+    where: { borrowDate: LessThan(date), returnDate: IsNull() },
+    relations: { book: true, reader: true },
+  })
+
+const fetchUnreturnedBorrowsByBookID = async (bookID: number) =>
   await borrowsRepository.find({
     where: { book: { id: bookID }, returnDate: IsNull() },
     relations: { book: true, reader: true },
   })
 
-const fetchBorrowCountByBookID = async (bookID: number) =>
+const countUnreturnedBorrowByBookID = async (bookID: number) =>
   await borrowsRepository.count({
     where: { book: { id: bookID }, returnDate: IsNull() },
   })
@@ -45,8 +51,9 @@ const returnBookByID = async (id: number) => {
 
 export {
   fetchAllBorrows,
-  fetchAllBorrowsByBookID,
-  fetchBorrowCountByBookID,
+  fetchUnreturnedBorrowsBeforeDate,
+  fetchUnreturnedBorrowsByBookID,
+  countUnreturnedBorrowByBookID,
   fetchBorrowsByID,
   addBorrowToDB,
   returnBookByID,

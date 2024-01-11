@@ -6,11 +6,14 @@ const borrowsRequestUrl = `${requestUrl}/borrows`
 
 const fetchAllBorrows = async () => await axios.get(`${borrowsRequestUrl}/`)
 
+const fetchUnreturnedBorrowsBeforeDate = async (date: string) =>
+  await axios.get(`${borrowsRequestUrl}/before-date/${date}/unreturned`)
+
 const borrowsByBookID = async (bookID: number) =>
-  await axios.get(`${borrowsRequestUrl}/by-book/${bookID}`)
+  await axios.get(`${borrowsRequestUrl}/by-book/${bookID}/unreturned`)
 
 const countBorrowsByBookID = async (bookID: number) =>
-  await axios.get(`${borrowsRequestUrl}/by-book/${bookID}/count`)
+  await axios.get(`${borrowsRequestUrl}/by-book/${bookID}/count/unreturned`)
 
 const fetchBorrowsByID = async (id: number) =>
   await axios.get(`${borrowsRequestUrl}/${id}`)
@@ -23,6 +26,7 @@ const returnBookByBorrowID = async (id: number) =>
 
 export {
   fetchAllBorrows,
+  fetchUnreturnedBorrowsBeforeDate,
   borrowsByBookID,
   countBorrowsByBookID,
   fetchBorrowsByID,

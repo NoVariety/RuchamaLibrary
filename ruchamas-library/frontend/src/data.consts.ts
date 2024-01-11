@@ -9,6 +9,11 @@ enum borrowViewTypes {
   RETURN,
 }
 
+enum readerViewTypes {
+  ALL,
+  UNRETURNED,
+}
+
 enum coverTypes {
   HARDCOVER = "Hardcover",
   PAPERBACK = "Paperback",
@@ -120,12 +125,15 @@ const defaultBookInfo: BookInformation = {
 }
 
 const ISBN_LENGTH: number = 13
+const MIN_BOOK_COPIES: number = 1
 const ID_LENGTH: number = 9
 const PHONE_NUMBER_LENGTH: number = 10
+const TWO_WEEKS_IN_MILLIS: number = 12096e5
 
 export {
   viewTypes,
   borrowViewTypes,
+  readerViewTypes,
   coverTypes,
   type DropdownOptionsType,
   type BookInformation,
@@ -141,6 +149,8 @@ export {
   type ChooseBorrowFormInput,
   defaultBookInfo,
   ISBN_LENGTH,
+  MIN_BOOK_COPIES,
   ID_LENGTH,
   PHONE_NUMBER_LENGTH,
+  TWO_WEEKS_IN_MILLIS,
 }

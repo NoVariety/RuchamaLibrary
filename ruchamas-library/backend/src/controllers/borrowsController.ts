@@ -1,8 +1,9 @@
 import { Request, Response } from "express"
 import {
   getAllBorrows,
-  getAllBorrowsByBookID,
-  getBorrowsAmountByBookID,
+  getUnreturnedBorrowsBeforeDate,
+  getUnreturnedBorrowsByBookID,
+  getUnreturnedBorrowsAmountByBookID,
   findBorrowByID,
   insertBorrowToDB,
   returnBookBorrowByID,
@@ -16,17 +17,34 @@ const requestAllBorrows = async (req: Request, res: Response) => {
   }
 }
 
-const requestAllBorrowsByBookID = async (req: Request, res: Response) => {
+const requestUnreturnedBorrowsBeforeDate = async (
+  req: Request,
+  res: Response
+) => {
   try {
-    res.send(await getAllBorrowsByBookID(req.params["id"]))
+    res.send(await getUnreturnedBorrowsBeforeDate(req.params["date"]))
   } catch (error) {
     res.send(error)
   }
 }
 
-const requestCountBorrowsByBookID = async (req: Request, res: Response) => {
+const requestUnreturnedBorrowsByBookID = async (
+  req: Request,
+  res: Response
+) => {
   try {
-    res.json(await getBorrowsAmountByBookID(req.params["id"]))
+    res.send(await getUnreturnedBorrowsByBookID(req.params["id"]))
+  } catch (error) {
+    res.send(error)
+  }
+}
+
+const requestCountUnreturnedBorrowsByBookID = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    res.json(await getUnreturnedBorrowsAmountByBookID(req.params["id"]))
   } catch (error) {
     res.send(error)
   }
@@ -58,8 +76,9 @@ const requestReturnBookByID = async (req: Request, res: Response) => {
 
 export {
   requestAllBorrows,
-  requestAllBorrowsByBookID,
-  requestCountBorrowsByBookID,
+  requestUnreturnedBorrowsBeforeDate,
+  requestUnreturnedBorrowsByBookID,
+  requestCountUnreturnedBorrowsByBookID,
   requestFindBorrowByID,
   sendAddBorrowToDB,
   requestReturnBookByID,

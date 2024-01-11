@@ -1,10 +1,4 @@
-import {
-  Dispatch,
-  MutableRefObject,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react"
+import { Dispatch, MutableRefObject, SetStateAction, useEffect } from "react"
 
 import { Button, Container } from "@mui/material"
 
@@ -23,6 +17,7 @@ import {
   LibPublishers,
   BookInformation,
   defaultBookInfo,
+  MIN_BOOK_COPIES,
 } from "../../../data.consts"
 
 import { fetchBooksApi } from "../../../APIs/googleBooksAPI"
@@ -93,6 +88,7 @@ export default function AddBookForm({
   const watchPrintFormat = watch("printFormat")
   const watchPublisherName = watch("publisherName")
   const watchPageCount = watch("pageCount")
+  const watchCopies = watch("copies")
 
   useEffect(() => {
     const publisher: LibPublishers | undefined = allPublishers.current.find(
@@ -216,9 +212,14 @@ export default function AddBookForm({
         label="Copies"
         {...register("copies", {
           pattern: /^\d+$/,
+          min: MIN_BOOK_COPIES,
           required: true,
         })}
-        errorMessage={`Copies must be a number!`}
+        errorMessage={
+          watchCopies < MIN_BOOK_COPIES
+            ? `Copies amount must be more than ${MIN_BOOK_COPIES - 1}`
+            : `Copies must be a number!`
+        }
       />
 
       <Button onClick={handleSubmit(onSubmit)} variant={"contained"}>

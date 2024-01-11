@@ -77,8 +77,10 @@ export default function BookBorrow({ book, readers }: Props) {
       <Stack direction="column">
         <Stack direction="row">
           <Container sx={infoNameSx}>Available Copies</Container>
-          {bookCopies && <Container sx={infoValueSx}>{bookCopies}</Container>}
-          {bookCopies && (
+          {bookCopies !== undefined && (
+            <Container sx={infoValueSx}>{bookCopies}</Container>
+          )}
+          {bookCopies !== undefined && (
             <Button
               variant="contained"
               onClick={handleSubmit(handleBorrow)}
@@ -89,7 +91,7 @@ export default function BookBorrow({ book, readers }: Props) {
             </Button>
           )}
         </Stack>
-        {bookCopies && bookCopies > 0 && (
+        {bookCopies !== undefined && bookCopies > 0 && (
           <FormInputDropdown
             control={control}
             label="reader"

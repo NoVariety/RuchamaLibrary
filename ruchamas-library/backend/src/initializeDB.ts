@@ -107,9 +107,14 @@ export default function initializeDB(dataSource: DataSource): void {
       // borrow2.reader = reader2
       // borrow2.borrowDate = new Date("2022-11-29")
       // borrow2.returnDate = new Date("2023-11-29")
+      // const borrow3 = new LibBorrows()
+      // borrow3.book = book
+      // borrow3.reader = reader3
+      // borrow3.borrowDate = new Date("2022-11-29")
       // const borrowRepository = dataSource.getRepository(LibBorrows)
       // await borrowRepository.save(borrow)
       // await borrowRepository.save(borrow2)
+      // await borrowRepository.save(borrow3)
     })
     .catch((error) => console.log(error))
 }

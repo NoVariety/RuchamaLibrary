@@ -6,8 +6,9 @@ const toggleButtonSx: SxProps = {
   "&.Mui-selected": {
     color: "white",
     backgroundColor: "background.strong",
-    width: "4.45rem",
+    width: "4.35rem",
   },
+  width: "3.1rem",
 }
 
 const toggleGroupSx: SxProps = {
